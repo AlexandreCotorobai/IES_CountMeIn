@@ -1,5 +1,8 @@
 # IES_CountMeIn
-Group 5's project for IES. Count Me In, an automatic sensor service that controls the number of people inside a room.
+Group 5's project for IES. Count Me In, is an automatic sensor service that controls the number of people inside a room.
+
+## Introduction
+
 
 ## Members of the group
 
