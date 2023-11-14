@@ -13,6 +13,8 @@ Group 5's project for IES. Count Me In, is an automatic sensor service that cont
 
 ## Architecture
 
+![Architecture](./CountMeIn/UML/ArchitectureDiagram/architecture.png)
+
 ## Bookmarks
 
 ### Project Resources
