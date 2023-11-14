@@ -26,3 +26,5 @@ Group 5's project for IES. Count Me In, is an automatic sensor service that cont
 ### Reports
 
 - [Editable Product Specification Report](https://docs.google.com/document/d/1DLN441DW_DaQnTAU9D2JchCNytAL9wR9nkcMuMj6qkw/edit?usp=sharing)
+
+- [UX Preview of CountMeIn](https://www.figma.com/file/CBGdvUVIvI0YjEOeBxCDpW/CountMeIn?type=design&node-id=6%3A5&mode=design&t=xh7WXl9CRVFXzweF-1)
