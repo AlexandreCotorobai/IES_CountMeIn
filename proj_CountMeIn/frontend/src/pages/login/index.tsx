@@ -2,7 +2,7 @@ import React from "react";
 
 
 
-export default function Login() {
+export function Component() {
     return (
         <div>
             <h1>Login</h1>

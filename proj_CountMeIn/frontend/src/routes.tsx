@@ -1,4 +1,4 @@
-import React, {lazy} from "react";
+import React from "react";
 import { Navigate } from "react-router-dom";
 import CleanLayout from "./layouts";
 
@@ -7,8 +7,8 @@ const routes = [
         path: "/",
         element: <CleanLayout />,
         children: [
-            { path: "/", element: lazy(() => import("./pages/home"))},
-            { path: "/login", element: lazy(() => import("./pages/login")) },
+            { path: "/", lazy: () => import("./pages/home")},
+            { path: "/login", lazy: () => import("./pages/login") },
         ],
     },
 ];
