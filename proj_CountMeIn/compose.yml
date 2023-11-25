@@ -12,6 +12,19 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data
 
+  db_mongo:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_DATABASE: countmein
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
 volumes:
   pg_data:
+    driver: local
+  mongo_data:
     driver: local
