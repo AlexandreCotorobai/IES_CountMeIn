@@ -1,6 +1,23 @@
 from confluent_kafka import Consumer
+from confluent_kafka.admin import AdminClient, NewTopic
 from pymongo import MongoClient
 import json
+
+
+# Create an instance of the AdminClient
+admin_client = AdminClient({
+    "bootstrap.servers": "kafka:9092"
+})
+
+# Define the new topic
+new_topic = NewTopic(
+    name="saveinmongo",  # The name of the new topic
+    num_partitions=1,  # Number of partitions
+    replication_factor=1  # Number of replicas
+)
+
+# Create the new topic
+admin_client.create_topics([new_topic])
 
  # Create a Kafka consumer
 consumer = Consumer({
@@ -15,12 +32,12 @@ db = client['countmein']
 collection = db['data']
 
 # Subscribe to the topic
-consumer.subscribe(['your_topic'])
+consumer.subscribe(['saveinmongo'])
 
 # Process messages
 while True:
     msg = consumer.poll(1.0)
-
+    print(msg)
     if msg is None:
         continue
     if msg.error():
