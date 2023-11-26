@@ -1,12 +1,11 @@
 import React from "react";
-
+import { ModeToggle } from "@/components/ModeToggle";
+import { Button } from "@/components/ui/button"
 
 export function Component() {
-    console.log(2);
     return (
-        <>
+        <>  
             <div>
-                <h1>Home</h1>
             </div>
         </>
     )

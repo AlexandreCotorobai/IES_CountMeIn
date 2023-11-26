@@ -1,10 +1,14 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
+import NavBar from "./Navbar";
 
 const CleanLayout = () => (
-    <div className="relative flex min-h-screen flex-col justify-between pt-20">
-        <Outlet/>
-    </div>
+        <div className="min-h-screen">
+            <header>
+                <NavBar/>
+            </header>
+            <Outlet/>
+        </div>
 );
 
 export default CleanLayout;
