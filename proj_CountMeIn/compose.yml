@@ -16,8 +16,8 @@ services:
     image: mongo:latest
     environment:
       MONGO_INITDB_DATABASE: countmein
-      MONGO_INITDB_ROOT_USERNAME: mongo
-      MONGO_INITDB_ROOT_PASSWORD: mongo
+      # MONGO_INITDB_ROOT_USERNAME: mongo
+      # MONGO_INITDB_ROOT_PASSWORD: mongo
     ports:
       - "27017:27017"
     volumes:
@@ -53,6 +53,14 @@ services:
       KAFKA_BROKERCONNECT: kafka:9092
     depends_on:
       - kafka
+      
+  kafka_2_mongo_service:
+    build: 
+      context: services
+
+    depends_on:
+      - kafka
+      - db_mongo
 
 volumes:
   pg_data:
