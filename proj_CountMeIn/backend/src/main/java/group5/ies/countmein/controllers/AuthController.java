@@ -24,7 +24,7 @@ public class AuthController {
         Optional<Admin> authenticatedAdmin = adminService.authenticate(admin.getEmail(), admin.getPassword());
 
         if (authenticatedAdmin.isPresent()) {
-            return new ResponseEntity<>("Login successful!", HttpStatus.OK);
+            return new ResponseEntity<>("Login successful", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Invalid credentials", HttpStatus.UNAUTHORIZED);
         }
