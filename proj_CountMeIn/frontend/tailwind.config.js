@@ -14,6 +14,14 @@ module.exports = {
       screens: {
         "2xl": "1400px",
       },
+      extend: {
+        minHeight: {
+          "screen-80": "80vh",
+          "screen-85": "85vh",
+          "screen-90": "90vh",
+          "screen-95": "95vh",
+        },
+      },
     },
     extend: {
       colors: {

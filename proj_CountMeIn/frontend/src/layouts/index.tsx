@@ -3,11 +3,13 @@ import { Outlet } from "react-router-dom";
 import NavBar from "./Navbar";
 
 const CleanLayout = () => (
-        <div className="min-h-screen">
+        <div>
             <header>
                 <NavBar/>
             </header>
-            <Outlet/>
+            <main>
+                <Outlet/>
+            </main>
         </div>
 );
 
