@@ -14,19 +14,12 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Input } from "@/components/ui/input";
 import { LoginFormSchema, LoginSchema } from "@/lib/types";
-import { useAuthContext } from "@/contexts/auth";
-import { API_URLS } from "@/lib/urls";
-import { useNavigate } from "react-router-dom";
-import React from "react";
-import { useMutation, useQuery } from "react-query";
-import axios from "axios";
+import useUserAuth from "@/hook/useUserAuth";
 
 
 export function LoginForm() {
 
-    const {setToken, token, login} = useAuthContext();
-    const navigate = useNavigate();
-    const [error, setError] = React.useState<string | null>(null);
+    const { login, isLoading, error } = useUserAuth();
 
     
     const form = useForm<LoginSchema>({
@@ -37,42 +30,8 @@ export function LoginForm() {
         },
       })
 
-    const loginMutation = useMutation({
-        mutationFn: async (loginData: LoginSchema) => {
-            const {data} = await axios.post(API_URLS.login, loginData);
-            return data;
-          },
-          onSuccess: (data) => {
-            setToken(data.token);
-          },
-          onError: (error: any) => {
-            setError(error.response.data.message);
-          },
-    })
-
-    useQuery({
-      queryKey: ['user'],
-      queryFn: async () => {
-        const {data} = await axios.get(API_URLS.user, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        return data;
-      },
-      enabled: !!token,
-      onSuccess: (data) => {
-        login(data);
-        navigate('/');
-      },
-      onError: (error) => {
-        console.log(error);
-      },
-
-    })
-
     const onSubmit = async (data: LoginSchema) => {
-        await loginMutation.mutateAsync(data);
+      await login(data);
     }
 
     return (
@@ -105,8 +64,15 @@ export function LoginForm() {
               )}
             />
             <div className="text-center">
-                <Button type="submit" className="rounded-full px-10 text-white">Submit</Button>
+                <Button 
+                    type="submit" 
+                    className="rounded-full px-10 text-white"
+                    disabled={isLoading}
+                >
+                    {isLoading ? 'Loading...' : 'Submit'}
+                </Button>
             </div>
+            {error && <div className="text-red-600">{error}</div>}
           </form>
         </Form>
       )

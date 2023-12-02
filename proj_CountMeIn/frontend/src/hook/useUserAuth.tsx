@@ -3,13 +3,14 @@ import { useMutation, useQuery } from 'react-query';
 import axios from 'axios';
 import { useAuthContext } from '@/contexts/auth';
 import { API_URLS } from '@/lib/urls';
+import { LoginSchema } from '@/lib/types';
 
 const useUserAuth = () => {
     const { setToken, login, token } = useAuthContext();
     const [error, setError] = useState<string | null>(null);
 
     const loginMutation = useMutation({
-        mutationFn: async (loginData) => {
+        mutationFn: async (loginData: LoginSchema) => {
             const { data } = await axios.post(API_URLS.login, loginData);
             return data;
         },
