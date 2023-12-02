@@ -18,3 +18,13 @@ export const LoginFormSchema = z.object({
   })
 
   export type LoginSchema = z.infer<typeof LoginFormSchema>;
+
+
+  // ---------------------------------------------
+
+  export interface User{
+    id: number;
+    name: string;
+    email: string;
+    password: string;
+  }

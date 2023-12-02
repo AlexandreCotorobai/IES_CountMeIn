@@ -1,6 +1,5 @@
 'use client'
 
-import React from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,9 +14,21 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Input } from "@/components/ui/input";
 import { LoginFormSchema, LoginSchema } from "@/lib/types";
+import { useAuthContext } from "@/contexts/auth";
+import { API_URLS } from "@/lib/urls";
+import { useNavigate } from "react-router-dom";
+import React from "react";
+import { useMutation, useQuery } from "react-query";
+import axios from "axios";
 
 
 export function LoginForm() {
+
+    const {setToken, token, login} = useAuthContext();
+    const navigate = useNavigate();
+    const [error, setError] = React.useState<string | null>(null);
+
+    
     const form = useForm<LoginSchema>({
         resolver: zodResolver(LoginFormSchema),
         defaultValues: {
@@ -26,44 +37,42 @@ export function LoginForm() {
         },
       })
 
-    const onSubmit = async (data: LoginSchema) => {
-        const response = await fetch('http://localhost:8080/api/login', { // TODO: Change this to the correct URL
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
+    const loginMutation = useMutation({
+        mutationFn: async (loginData: LoginSchema) => {
+            const {data} = await axios.post(API_URLS.login, loginData);
+            return data;
+          },
+          onSuccess: (data) => {
+            setToken(data.token);
+          },
+          onError: (error: any) => {
+            setError(error.response.data.message);
+          },
+    })
+
+    useQuery({
+      queryKey: ['user'],
+      queryFn: async () => {
+        const {data} = await axios.get(API_URLS.user, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         });
+        return data;
+      },
+      enabled: !!token,
+      onSuccess: (data) => {
+        login(data);
+        navigate('/');
+      },
+      onError: (error) => {
+        console.log(error);
+      },
 
-        if(!response.ok) {
-            alert('Login failed. Please try again.');
-            return;
-        }
-        const response_data = await response.json();
+    })
 
-        if(response_data.errors){
-            const errors = response_data.errors;
-
-            if(errors.email){
-                form.setError('email', {
-                    type: 'manual',
-                    message: errors.email,
-                });
-            } else if (errors.password) {
-                form.setError('password', {
-                    type: 'manual',
-                    message: errors.password,
-                });
-            } else {
-                alert('Login failed. Please try again.');
-            }
-        }
-
-        if(!response_data.errors){
-            form.reset();
-            alert('Login successful!');
-        }
-
+    const onSubmit = async (data: LoginSchema) => {
+        await loginMutation.mutateAsync(data);
     }
 
     return (
