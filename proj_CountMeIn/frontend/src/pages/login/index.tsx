@@ -1,4 +1,3 @@
-import React from "react";
 import BlueLine from "@/assets/Background/blueLine.svg";
 import LightLine from "@/assets/Background/lightLine.svg";
 import NormalBlueLine from "@/assets/Background/normalBlueLine.svg";
@@ -19,6 +18,8 @@ export function Component() {
         </div>
     )
 }
+
+export default Component;
 
 
 

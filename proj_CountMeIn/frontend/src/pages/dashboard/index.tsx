@@ -1,3 +1,4 @@
+import { ModeToggle } from "@/components/ModeToggle";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/CountMeIn_logo.svg"; // Ajuste o caminho conforme necessário
 
