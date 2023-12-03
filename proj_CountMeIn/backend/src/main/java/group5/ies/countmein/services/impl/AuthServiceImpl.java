@@ -25,10 +25,30 @@ public class AuthServiceImpl implements AuthService {
         if (admin != null && admin.checkPassword(loginRequest.getPassword())) {
             String token = jwtTokenService.generateToken(loginRequest.getEmail());
             whiteList.put(admin.getEmail(), token);
-            System.out.println("Login successful");
             return new LoginResponse(token);
         }
-        System.out.println("Invalid credentials");
+        return null;
+    }
+
+    public Boolean isAuthenticated(String tokenRequest) {
+        String token = tokenRequest.replace("Bearer ", "");
+        if (whiteList.isEmpty()) {
+            return false;
+        }
+        String email = jwtTokenService.getEmailFromToken(token);
+        if (!jwtTokenService.validateToken(token) || !whiteList.containsKey(email)) {
+            return false;
+        }
+        return whiteList.get(email).equals(token);
+    }
+
+    public Admin currentAdmin(String tokenRequest) {
+        String token = tokenRequest.replace("Bearer ", "");
+        String email = jwtTokenService.getEmailFromToken(token);
+        Admin admin = adminRepository.findByEmail(email).orElse(null);
+        if (admin != null) {
+            return admin;
+        }
         return null;
     }
 

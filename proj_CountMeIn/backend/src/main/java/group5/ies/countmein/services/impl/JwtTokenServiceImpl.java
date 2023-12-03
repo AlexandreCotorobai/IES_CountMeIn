@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import group5.ies.countmein.config.JwtConfig;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -32,5 +34,26 @@ public class JwtTokenServiceImpl {
                 .setExpiration(expiryDate)
                 .signWith(jwtKey, SignatureAlgorithm.HS512)
                 .compact();
+    }
+
+    public boolean validateToken(String tokenRequest) {
+        String token = tokenRequest.replace("Bearer ", "");
+        try {
+            Date expiration = Jwts.parserBuilder().setSigningKey(jwtKey).build().parseClaimsJws(token).getBody()
+                    .getExpiration();
+            return !expiration.before(new Date());
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public String getEmailFromToken(String token) {
+        token = token.replace("Bearer ", "");
+        try {
+            Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(jwtKey).build().parseClaimsJws(token);
+            return claims.getBody().getSubject();
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
