@@ -1,5 +1,8 @@
 package group5.ies.countmein.entities;
 
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,4 +31,15 @@ public class Admin {
     private String email;
     @Column(nullable = false)
     private String password;
+
+    // public void setPassword(String password) {
+    // PasswordEncoder encoder =
+    // PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    // this.password = encoder.encode(password);
+    // }
+
+    public boolean checkPassword(String password) {
+        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        return encoder.matches(password, this.password);
+    }
 }
