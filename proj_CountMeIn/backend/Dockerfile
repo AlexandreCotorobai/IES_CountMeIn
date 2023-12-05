@@ -6,4 +6,4 @@ COPY . .
 
 RUN mvn install -DskipTests
 
-CMD java -jar target/countmein-0.0.1-SNAPSHOT.jar
+CMD mvn spring-boot:run

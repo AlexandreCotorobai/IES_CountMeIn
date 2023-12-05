@@ -90,5 +90,6 @@ volumes:
     driver: local
   mongo_data:
     driver: local
-
+  node_modules:
+    driver: local
   
