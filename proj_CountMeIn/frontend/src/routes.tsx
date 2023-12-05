@@ -32,7 +32,7 @@ const routes = [
                 path: "/dashboard", 
                 element: (
                     <Suspense fallback={<div>Loading Dashboard...</div>}>
-                        <CustomRoute page={DashboardComponent} />
+                        <CustomRoute page={DashboardComponent} isPublic={true} />
                     </Suspense>
                 )
             }
