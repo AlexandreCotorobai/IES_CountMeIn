@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import group5.ies.countmein.entities.Admin;
 import group5.ies.countmein.entities.auth.LoginRequest;
 import group5.ies.countmein.entities.auth.LoginResponse;
+import group5.ies.countmein.entities.dto.AdminDTO;
 import group5.ies.countmein.services.impl.AuthServiceImpl;
 import lombok.AllArgsConstructor;
 
@@ -58,7 +58,7 @@ public class AuthController {
     @GetMapping("/me")
     @PreAuthorize("@authServiceImpl.isAuthenticated(#token)")
     public ResponseEntity<Object> me(@RequestHeader("Authorization") String token) {
-        Admin admin = authService.currentAdmin(token);
+        AdminDTO admin = authService.currentAdmin(token);
         if (admin == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .contentType(APPLICATION_JSON)

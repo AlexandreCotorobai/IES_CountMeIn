@@ -3,11 +3,13 @@ package group5.ies.countmein.services.impl;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import group5.ies.countmein.entities.Admin;
 import group5.ies.countmein.entities.auth.LoginRequest;
 import group5.ies.countmein.entities.auth.LoginResponse;
+import group5.ies.countmein.entities.dto.AdminDTO;
 import group5.ies.countmein.repositories.AdminRepository;
 import group5.ies.countmein.services.AuthService;
 import lombok.AllArgsConstructor;
@@ -42,13 +44,15 @@ public class AuthServiceImpl implements AuthService {
         return whiteList.get(email).equals(token);
     }
 
-    public Admin currentAdmin(String tokenRequest) {
+    public AdminDTO currentAdmin(String tokenRequest) {
         String token = tokenRequest.replace("Bearer ", "");
         String email = jwtTokenService.getEmailFromToken(token);
         Admin admin = adminRepository.findByEmail(email).orElse(null);
         if (admin != null) {
-            return admin;
+            ModelMapper modelMapper = new ModelMapper();
+            return modelMapper.map(admin, AdminDTO.class);
         }
+
         return null;
     }
 

@@ -1,6 +1,6 @@
 package group5.ies.countmein.entities;
 
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,9 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,15 +35,8 @@ public class Admin {
     @Column(nullable = false)
     private String password;
 
-    @ManyToMany
-    @JoinTable(name = "admins_salas", joinColumns = @JoinColumn(name = "admin_id"), inverseJoinColumns = @JoinColumn(name = "sala_id"))
-    private Set<Sala> salas;
-
-    // public void setPassword(String password) {
-    // PasswordEncoder encoder =
-    // PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    // this.password = encoder.encode(password);
-    // }
+    @OneToMany(mappedBy = "admin")
+    private List<Sala> salas;
 
     public boolean checkPassword(String password) {
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
