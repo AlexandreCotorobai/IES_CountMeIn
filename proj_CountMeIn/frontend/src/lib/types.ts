@@ -39,3 +39,10 @@ export const LoginFormSchema = z.object({
     email: string;
     password: string;
   }
+
+  export interface RoomSettings{
+    id: number;
+    maxOccupancy: number;
+    currentCapacity: number;
+    upTime: number;
+  }

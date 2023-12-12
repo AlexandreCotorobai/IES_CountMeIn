@@ -1,5 +1,5 @@
-import React from 'react';
-import { Ghost, Settings } from 'lucide-react';
+import React, {useEffect} from 'react';
+import { Settings } from 'lucide-react';
 import {
     Dialog,
     DialogContent,
@@ -21,8 +21,11 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import {SettingsFormSchema, SettingsSchema} from "@/lib/types"
 import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
-
-
+import { useAuthContext } from '@/contexts/auth';
+import axios from 'axios';
+import { API_URLS } from '@/lib/urls';
+import { useMutation } from 'react-query';
+import { useMaxOccupancyContext } from '@/contexts/maxOccupancy';
 
 interface SubNavbarProps {
     status: string;
@@ -31,19 +34,44 @@ interface SubNavbarProps {
 
 const SubNavbar: React.FC<SubNavbarProps> = ({status}) => {
 
+    const {token} = useAuthContext();
+    const {setMaxOccupancy} = useMaxOccupancyContext();
 
     const form = useForm<SettingsSchema>({
         resolver: zodResolver(SettingsFormSchema),
         defaultValues: {
             lock_unlock: JSON.parse(localStorage.getItem('lock_unlock') ?? 'false'),
-            maximumOccupancy: 0,
         },
     });
 
+    useEffect(() => {
+        console.log("Form errors:", form.formState.errors);
+      }, [form.formState.errors]);
+
+
+    const mutation = useMutation( async (data: SettingsSchema) => {
+        const response = await axios.put(API_URLS.settings, data, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    },
+    {
+        onSuccess: () => {
+            console.log("Success");
+            setMaxOccupancy(() => form.getValues('maximumOccupancy'));
+        },
+        onError: () => {
+            console.log("Error");
+        }
+    }
+    );
+
     function onSubmit(data: SettingsSchema) {
         console.log(data);
-
+        mutation.mutate(data);
     }
+
+
 
     return (
         <div className="flex items-center font-semibold bg-sky-900 p-3 rounded-md text-white space-x-2">
@@ -66,7 +94,14 @@ const SubNavbar: React.FC<SubNavbarProps> = ({status}) => {
                                             <FormItem>
                                                 <FormLabel className="text-2xl font-semibold">Maximum Occupancy</FormLabel>
                                                 <FormControl className='w-1/3 translate-x-20'>
-                                                    <Input type="number" {...field} />
+                                                <Input 
+                                                    type="number" 
+                                                    {...field} 
+                                                    onChange={(e) => {
+                                                        console.log("Input value:", e.target.value);
+                                                        field.onChange(Number(e.target.value));
+                                                    }} 
+                                                />
                                                 </FormControl>
                                             </FormItem>
                                         )}
@@ -89,12 +124,21 @@ const SubNavbar: React.FC<SubNavbarProps> = ({status}) => {
                                         </FormItem>
                                     )}
                                     />
-                                    <div className="text-center">
+                                    <div className="text-center space-x-4">
                                         <Button 
                                             type="submit" 
                                             className="rounded-full px-10 text-white"
                                         >
                                             Update
+                                        </Button>
+                                        <Button
+                                            variant={'destructive'}
+                                            className="rounded-full px-10 text-white"
+                                            onClick={() => {
+                                                form.reset();
+                                                localStorage.removeItem('lock_unlock');
+                                            }}
+                                        > Cancel
                                         </Button>
                                     </div>
                                 </form> 

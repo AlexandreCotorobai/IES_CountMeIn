@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import axios from 'axios';
 import { useAuthContext } from '@/contexts/auth';
@@ -16,6 +16,7 @@ const useUserAuth = () => {
         },
         onSuccess: (data) => {
             setToken(data.token);
+            localStorage.setItem('token', data.token);
         },
         onError: (error: any) => {
             setError(error.response?.data?.message || 'Login failed. Please try again.');
@@ -40,6 +41,13 @@ const useUserAuth = () => {
             },
         }
     );
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            setToken(token);
+        }
+    }, []);
 
     return {
         login: loginMutation.mutateAsync,

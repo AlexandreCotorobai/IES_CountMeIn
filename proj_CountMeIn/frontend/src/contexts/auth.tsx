@@ -1,5 +1,6 @@
 import {User} from "@/lib/types";
 import React, {useState, useMemo} from "react";
+import { QueryClient } from "react-query";
 
 export interface AuthProps {
     children: React.ReactNode;
@@ -19,6 +20,7 @@ export const AuthContext = React.createContext<IAuthContext>({} as IAuthContext)
 export const AuthProvider: React.FC<AuthProps> = ({children}: React.PropsWithChildren<{}>) => {
     const [user, setUser] = useState<User | null>(null);
     const [token, setToken] = useState<string | null>(null);
+    const queryClient = new QueryClient();
     const login = async (user: User) => {
         setUser(user);
         // await queryClient.resetQueries('articles')
@@ -31,6 +33,7 @@ export const AuthProvider: React.FC<AuthProps> = ({children}: React.PropsWithChi
     const logout = async () => {
         setUser(null);
         setToken(null);
+        await queryClient.clear();
     }
 
     const authCtx = useMemo<IAuthContext>(():IAuthContext => ({
@@ -49,4 +52,10 @@ export const AuthProvider: React.FC<AuthProps> = ({children}: React.PropsWithChi
     );
 }
 
-export const useAuthContext = () => React.useContext(AuthContext);
+export const useAuthContext = () => {
+    const context = React.useContext(AuthContext)
+    if (context === undefined) {
+        throw new Error('useAuthContext must be used within a AuthProvider')
+    }
+    return context
+}

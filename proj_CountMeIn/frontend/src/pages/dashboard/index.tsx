@@ -36,7 +36,7 @@ export function Component() {
         </div>
         {/* Conteúdo */}
         <div className="flex-grow border bg-cyan-950 rounded-b-sm p-4">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 pl-3 pt-3">
             {/* Cartões de informação */}
             <div className="order-1">
               <UpdateCard lastUpdated='12:00:00' fetchUpdate={() => console.log('Fetch Update')} />
@@ -47,7 +47,7 @@ export function Component() {
               asad
             </div>
             <div className='lg:order-3 order-2'>
-              <RoomInfoCard uptime={100} currentCapacity={10} maximumOccupancy={20} />
+              <RoomInfoCard/>
               {/* Segundo card da primeira coluna */}
             </div>
           </div>
