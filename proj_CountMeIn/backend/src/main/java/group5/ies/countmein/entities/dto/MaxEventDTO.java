@@ -1,8 +1,7 @@
 package group5.ies.countmein.entities.dto;
 
-import java.util.List;
+import java.time.LocalDate;
 
-import group5.ies.countmein.entities.Room;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,8 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminDTO {
-    private long id;
-    private String name;
-    private List<Room> salas;
+public class MaxEventDTO {
+    private int room_count;
+    private LocalDate date;
 }

@@ -24,24 +24,6 @@ import lombok.AllArgsConstructor;
 public class AuthController {
     private AuthServiceImpl authService;
 
-    // @PostMapping("/login")
-    // public ResponseEntity<String> login(@RequestBody Admin admin) {
-    // Optional<Admin> authenticatedAdmin =
-    // adminService.authenticate(admin.getEmail(), admin.getPassword());
-    // try {
-    // if (authenticatedAdmin.isPresent()) {
-    // return new ResponseEntity<>("Login successful", HttpStatus.OK);
-    // } else {
-    // return new ResponseEntity<>("Invalid credentials", HttpStatus.UNAUTHORIZED);
-    // }
-    // } catch (Exception e) {
-    // System.out.println(e.getMessage());
-    // System.out.println(e.getCause());
-    // System.out.println(e.getLocalizedMessage());
-    // throw new BadCredentialsException("Invalid credentials");
-    // }
-    // }
-
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody LoginRequest loginRequest) {
         LoginResponse response = authService.login(loginRequest);
@@ -55,7 +37,7 @@ public class AuthController {
                 .body(response);
     }
 
-    @GetMapping("/me")
+    @GetMapping("/user")
     @PreAuthorize("@authServiceImpl.isAuthenticated(#token)")
     public ResponseEntity<Object> me(@RequestHeader("Authorization") String token) {
         AdminDTO admin = authService.currentAdmin(token);
