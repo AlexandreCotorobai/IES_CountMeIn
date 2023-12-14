@@ -34,7 +34,9 @@ const useUserAuth = () => {
         {
             enabled: !!token,
             onSuccess: (data) => {
-                login(data);
+                if (token) {
+                    login(data, token);
+                }
             },
             onError: (error: any) => {
                 setError(error.response?.data?.message || 'Failed to fetch user data.');

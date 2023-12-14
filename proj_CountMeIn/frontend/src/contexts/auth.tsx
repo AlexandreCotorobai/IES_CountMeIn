@@ -1,6 +1,9 @@
-import {User} from "@/lib/types";
-import React, {useState, useMemo} from "react";
+import {User, LoginSchema} from "@/lib/types";
+import React, {useState, useMemo, useEffect} from "react";
 import { QueryClient } from "react-query";
+import { useMutation, useQuery } from 'react-query';
+import axios from 'axios';
+import { API_URLS } from '@/lib/urls';
 
 export interface AuthProps {
     children: React.ReactNode;
@@ -10,7 +13,7 @@ export interface IAuthContext {
     user: User | null;
     token: string | null,
     setToken: (token: string | null) => void;
-    login: (auth: User) => Promise<void>;
+    login: (user: User, token: string) => Promise<void>;
     isLogged: () => boolean;
     logout: () => Promise<void>;
 }
@@ -22,8 +25,9 @@ export const AuthProvider: React.FC<AuthProps> = ({children}: React.PropsWithChi
     const [token, setToken] = useState<string | null>(null);
     const queryClient = new QueryClient();
     
-    const login = async (user: User) => {
+    const login = async (user: User, token: string) => {
         setUser(user);
+        setToken(token);
     }
 
     const isLogged = () => {
