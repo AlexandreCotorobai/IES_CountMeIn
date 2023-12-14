@@ -5,10 +5,10 @@ export interface RoomInfoContextProps {
 }
 
 export interface IRoomInfoContext {
-    maxOccupancy: number;
-    setMaxOccupancy: (maxOccupancy: number) => void;
-    currentCapacity: number;
-    setCurrentCapacity: (currentCapacity: number) => void;
+    maxCapacity: number;
+    setMaxCapacity: (maxCapacity: number) => void;
+    currentOccupancy: number;
+    setCurrentOccupancy: (currentOccupancy: number) => void;
     upTime: number;
     setUpTime: (upTime: number) => void;
 }
@@ -16,23 +16,23 @@ export interface IRoomInfoContext {
 export const RoomInfoContext = React.createContext<IRoomInfoContext>({} as IRoomInfoContext);
 
 export const RoomInfoProvider: React.FC<RoomInfoContextProps> = ({ children }) => {
-    const [maxOccupancy, setMaxOccupancy] = useState<number>(0);
-    const [currentCapacity, setCurrentCapacity] = useState<number>(0);
+    const [maxCapacity, setMaxCapacity] = useState<number>(0);
+    const [currentOccupancy, setCurrentOccupancy] = useState<number>(0);
     const [upTime, setUpTime] = useState<number>(0);
 
     //pode dar porcaria, se der é aqui!
-    const handleSetMaxOccupancy = useCallback((max: number) => setMaxOccupancy(max), []);
-    const handleSetCurrentCapacity = useCallback((capacity: number) => setCurrentCapacity(capacity), []);
+    const handleSetMaxCapacity = useCallback((max: number) => setMaxCapacity(max), []);
+    const handleSetCurrentOccupancy = useCallback((capacity: number) => setCurrentOccupancy(capacity), []);
     const handleSetUpTime = useCallback((time: number) => setUpTime(time), []);
 
     const value = useMemo(() => ({
-        maxOccupancy,
-        setMaxOccupancy: handleSetMaxOccupancy,
-        currentCapacity,
-        setCurrentCapacity: handleSetCurrentCapacity,
+        maxCapacity,
+        setMaxCapacity: handleSetMaxCapacity,
+        currentOccupancy,
+        setCurrentOccupancy: handleSetCurrentOccupancy,
         upTime,
         setUpTime: handleSetUpTime,
-    }), [maxOccupancy, currentCapacity, upTime, handleSetMaxOccupancy, handleSetCurrentCapacity, handleSetUpTime]);
+    }), [maxCapacity, currentOccupancy, upTime, handleSetMaxCapacity, handleSetCurrentOccupancy, handleSetUpTime]);
 
     return (
         <RoomInfoContext.Provider value={value}>

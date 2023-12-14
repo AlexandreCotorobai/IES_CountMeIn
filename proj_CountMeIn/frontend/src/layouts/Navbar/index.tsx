@@ -28,7 +28,7 @@ const NavBar: React.FC = () => {
         </div>
         {isLogged() ? (
           <>
-            <Link to="/admindashboard">
+            <Link to="/dashboard">
               <NavBarButton label='Admin DashBoard'/>
             </Link>
             <Link to="/logout" className='pl-5'>
@@ -39,11 +39,9 @@ const NavBar: React.FC = () => {
             </Link>
           </>
         ) : (
-            <>
-             <Link to="/login">
+            <Link to="/login">
                 <NavBarButton label='Login'/>
-              </Link> 
-            </>
+            </Link>
         )}
       </div>
     </nav>

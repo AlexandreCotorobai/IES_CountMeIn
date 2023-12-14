@@ -1,7 +1,6 @@
-import React, { Suspense } from 'react';
+import { Suspense, lazy } from 'react';
 import CleanLayout from "./layouts";
 import { CustomRoute } from "./components/ProtectedRoute";
-import { lazy } from 'react';
 
 const HomeComponent = lazy(() => import("./pages/home"));
 const LoginComponent = lazy(() => import("./pages/login"));
@@ -32,7 +31,7 @@ const routes = [
                 path: "/dashboard", 
                 element: (
                     <Suspense fallback={<div>Loading Dashboard...</div>}>
-                        <CustomRoute page={DashboardComponent} isPublic={true} />
+                        <CustomRoute page={DashboardComponent} isPublic={true} redirectTo='/dashboard' />
                     </Suspense>
                 )
             }

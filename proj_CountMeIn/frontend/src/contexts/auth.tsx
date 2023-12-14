@@ -10,7 +10,7 @@ export interface IAuthContext {
     user: User | null;
     token: string | null,
     setToken: (token: string | null) => void;
-    login: (auth: User) => void;
+    login: (auth: User) => Promise<void>;
     isLogged: () => boolean;
     logout: () => Promise<void>;
 }
@@ -21,9 +21,9 @@ export const AuthProvider: React.FC<AuthProps> = ({children}: React.PropsWithChi
     const [user, setUser] = useState<User | null>(null);
     const [token, setToken] = useState<string | null>(null);
     const queryClient = new QueryClient();
+    
     const login = async (user: User) => {
         setUser(user);
-        // await queryClient.resetQueries('articles')
     }
 
     const isLogged = () => {
@@ -33,6 +33,7 @@ export const AuthProvider: React.FC<AuthProps> = ({children}: React.PropsWithChi
     const logout = async () => {
         setUser(null);
         setToken(null);
+        localStorage.removeItem('token');
         queryClient.clear();
     }
 

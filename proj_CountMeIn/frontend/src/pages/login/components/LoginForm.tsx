@@ -15,11 +15,14 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Input } from "@/components/ui/input";
 import { LoginFormSchema, LoginSchema } from "@/lib/types";
 import useUserAuth from "@/hook/useUserAuth";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 export function LoginForm() {
 
-    const { login, isLoading, error } = useUserAuth();
+    const navigate = useNavigate();
+    const { login, isLoading, error, isLogged } = useUserAuth();
 
     
     const form = useForm<LoginSchema>({
@@ -29,6 +32,12 @@ export function LoginForm() {
           password: "",
         },
       })
+
+    useEffect(() => {
+        if (isLogged) {
+            navigate('/');
+        }
+    } , [isLogged]);
 
     const onSubmit = async (data: LoginSchema) => {
       await login(data);

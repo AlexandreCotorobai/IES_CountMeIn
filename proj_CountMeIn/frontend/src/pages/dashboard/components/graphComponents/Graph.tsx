@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { API_URLS } from "@/lib/urls";
-
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { useAuthContext } from "@/contexts/auth";
 interface GraphProps {
     value: string;
 }
@@ -14,13 +15,13 @@ const Graph: React.FC<GraphProps> = ({ value }) => {
                 url = API_URLS.todayGraph;
                 break;
             case "weekly":
-                url = API_URLS.weekGraph
+                url = API_URLS.weekGraph;
                 break;
             case "monthly":
-                url = "http://localhost:8000/api/room/monthly";
+                url = API_URLS.monthGraph;
                 break;
             default:
-                url = "http://localhost:8000/api/room/today";
+                url = API_URLS.todayGraph;
                 break;
         }
         fetch(url)

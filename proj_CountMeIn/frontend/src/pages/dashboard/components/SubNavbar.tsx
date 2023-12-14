@@ -35,7 +35,7 @@ interface SubNavbarProps {
 const SubNavbar: React.FC<SubNavbarProps> = ({status}) => {
 
     const {token} = useAuthContext();
-    const {setMaxOccupancy} = useRoomInfoContext();
+    const {setMaxCapacity} = useRoomInfoContext();
 
     const form = useForm<SettingsSchema>({
         resolver: zodResolver(SettingsFormSchema),
@@ -58,7 +58,7 @@ const SubNavbar: React.FC<SubNavbarProps> = ({status}) => {
     {
         onSuccess: () => {
             console.log("Success");
-            setMaxOccupancy(form.getValues('maximumOccupancy'));        },
+            setMaxCapacity(form.getValues('maximumOccupancy'));        },
         onError: () => {
             console.log("Error");
         }
