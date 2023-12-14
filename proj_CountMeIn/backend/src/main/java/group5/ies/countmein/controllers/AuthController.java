@@ -37,7 +37,7 @@ public class AuthController {
                 .body(response);
     }
 
-    @GetMapping("/me")
+    @GetMapping("/user")
     @PreAuthorize("@authServiceImpl.isAuthenticated(#token)")
     public ResponseEntity<Object> me(@RequestHeader("Authorization") String token) {
         AdminDTO admin = authService.currentAdmin(token);
