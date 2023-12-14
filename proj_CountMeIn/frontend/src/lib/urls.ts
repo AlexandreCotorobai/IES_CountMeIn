@@ -5,4 +5,8 @@ export const API_URLS = {
     user: `${BASE_URL}/user`,
     settings: `${BASE_URL}/roomSettings/update`,
     generalInfo: `${BASE_URL}/roomSettings/generalInfo`,
+    todayGraph: `${BASE_URL}/roomSettings/todayGraph`,
+    weekGraph: `${BASE_URL}/roomSettings/weekGraph`,
+    monthGraph: `${BASE_URL}/roomSettings/monthGraph`,
+
 }

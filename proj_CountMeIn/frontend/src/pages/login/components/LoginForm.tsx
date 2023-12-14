@@ -14,12 +14,17 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Input } from "@/components/ui/input";
 import { LoginFormSchema, LoginSchema } from "@/lib/types";
-import useUserAuth from "@/hook/useUserAuth";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "@/contexts/auth";
 
 
 export function LoginForm() {
 
-    const { login, isLoading, error } = useUserAuth();
+    const navigate = useNavigate();
+
+    const {user, token, loginMutation, error} = useAuthContext();
+
 
     
     const form = useForm<LoginSchema>({
@@ -30,8 +35,14 @@ export function LoginForm() {
         },
       })
 
+    useEffect(() => {
+        if (token) {
+            navigate('/');
+        }
+    } , [token, user]);
+
     const onSubmit = async (data: LoginSchema) => {
-      await login(data);
+      loginMutation.mutateAsync(data);
     }
 
     return (
@@ -67,9 +78,9 @@ export function LoginForm() {
                 <Button 
                     type="submit" 
                     className="rounded-full px-10 text-white"
-                    disabled={isLoading}
+                    disabled={loginMutation.isLoading}
                 >
-                    {isLoading ? 'Loading...' : 'Submit'}
+                    {loginMutation.isLoading ? 'Loading...' : 'Submit'}
                 </Button>
             </div>
             {error && <div className="text-red-600">{error}</div>}

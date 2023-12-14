@@ -1,6 +1,6 @@
 import Sidebar from '@/pages/dashboard/components/Sidebar';
 import RoomInfoCard from '@/pages/dashboard/components/RoomInfoCard';
-import GraphCard from '@/pages/dashboard/components/GraphCard';
+import GraphCard from '@/pages/dashboard/components/graphComponents/GraphCard';
 import SubNavbar from '@/pages/dashboard/components/SubNavbar';
 import UpdateCard from '@/pages/dashboard/components/UpdateCard';
 import { useEffect, useState } from 'react';
@@ -44,7 +44,7 @@ export function Component() {
             </div>
             <div className="order-3 col-span-2 lg:col-span-3 lg:row-span-3 lg:order-2">
               {/* Card que ocupa as duas colunas */}
-              asad
+              <GraphCard/>
             </div>
             <div className='lg:order-3 order-2'>
               <RoomInfoCard/>

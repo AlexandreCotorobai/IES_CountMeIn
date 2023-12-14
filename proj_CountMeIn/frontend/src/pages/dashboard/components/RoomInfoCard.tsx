@@ -12,9 +12,8 @@ import { useQuery } from 'react-query';
 import { API_URLS } from '@/lib/urls';
 import axios from 'axios';
 import { useAuthContext } from '@/contexts/auth';
-import { useMaxOccupancyContext } from '@/contexts/maxOccupancy';
+import { useRoomInfoContext } from '@/contexts/roomInformation';
 import { RoomSettings } from '@/lib/types';
-import { set } from 'zod';
 
 interface RoomInfoCardProps {
 }
@@ -23,11 +22,12 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = () => {
 
     const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
     const {token} = useAuthContext();
-    const {maxOccupancy = 20, setMaxOccupancy} = useMaxOccupancyContext();
+    const {maxCapacity, setMaxCapacity, currentOccupancy, setCurrentOccupancy, upTime, setUpTime} = useRoomInfoContext();
 
-
-    const [currentCapacity, setCurrentCapacity] = useState<number>(0);
-    const [upTime, setUpTime] = useState<number>(0);
+    //apagar isto depois
+    useEffect(() => {
+        setMaxCapacity(20);
+    }, [setMaxCapacity]);
 
     useQuery<RoomSettings>({
         queryKey: 'roomSettings',
@@ -38,16 +38,15 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = () => {
             return data;
         },
         onSuccess: (data) => {
-            setCurrentCapacity(()=> data.currentCapacity);
-            setUpTime(() => data.upTime);
-            setMaxOccupancy(()=> data.maxOccupancy);
+            setCurrentOccupancy(data.currentOccupancy);
+            setUpTime(data.upTime);
+            setMaxCapacity(data.maxCapacity);
         },
         onError: () => {
             console.log("Error");
         },
         refetchInterval: 5000,
     });
-
 
     useEffect(() => {
         const resizeObserver = new ResizeObserver(entries => {
@@ -74,18 +73,21 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = () => {
 
     const data2 = [
         {
+            id: 'A',
             name: 'A',
-            maxValue: maxOccupancy*0.6,
+            maxValue: maxCapacity*0.6,
             color: '#82ca9d',
         },
         {
+            id: 'B',
             name: 'B',
-            maxValue: maxOccupancy*0.2,
+            maxValue: maxCapacity*0.2,
             color: '#ffc658',
         },
         {
+            id: 'C',
             name: 'C',
-            maxValue: maxOccupancy*0.1,
+            maxValue: maxCapacity*0.1,
             color: '#ff0000',
         },
     ];
@@ -95,7 +97,7 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = () => {
     const cy = containerSize.height / 2;
     const iR = Math.min(containerSize.width, containerSize.height) * 0.2;
     const oR = Math.min(containerSize.width, containerSize.height) * 0.4;
-    const value = currentCapacity;
+    const value = currentOccupancy;
 
     const needle = (value: number, data: any[], cx: number, cy: number, iR: number, oR: number, color: string | undefined) => {
         let total = 0;
@@ -117,9 +119,9 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = () => {
         const yp = y0 + length * sin;
       
         return [
-          <circle cx={x0} cy={y0} r={r} fill={color} stroke="none" />,
-          <path d={`M${xba} ${yba}L${xbb} ${ybb} L${xp} ${yp} L${xba} ${yba}`} stroke="#none" fill={color} strokeWidth={2} />,
-          <text x={cx} y={cy + 40} fill="#ffffff" fontSize={"20"} textAnchor="middle">{`${currentCapacity}/${maxOccupancy}`}</text>
+          <circle key="circle" cx={x0} cy={y0} r={r} fill={color} stroke="none" />,
+          <path key="path" d={`M${xba} ${yba}L${xbb} ${ybb} L${xp} ${yp} L${xba} ${yba}`} stroke="#none" fill={color} strokeWidth={2} />,
+          <text key="text" x={cx} y={cy + 40} fill="#ffffff" fontSize={"20"} textAnchor="middle">{`${currentOccupancy}/${maxCapacity}`}</text>
         ];
       };
 
@@ -131,8 +133,8 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = () => {
             </CardHeader>
             <CardContent className="grid gap-y-7 text-center font-semibold text-2xl">
                 <div>Uptime: {upTime} Hours</div>
-                <div>Current Occupancy: {currentCapacity}</div>
-                <div>Maximum Occupancy: {maxOccupancy}</div>
+                <div>Current Occupancy: {currentOccupancy}</div>
+                <div>Maximum Occupancy: {maxCapacity}</div>
             </CardContent>
             <CardFooter className='hidden lg:block'>
                 <ResponsiveContainer width="100%" height={250} className={"bg-cyan-950 rounded-lg"}>
@@ -149,12 +151,11 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = () => {
                         fill="#8884d8"
                         stroke="none"
                         >
-                        {data2.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={entry.color} />
+                        {data2.map((entry) => (
+                            <Cell key={entry.id} fill={entry.color} />
                         ))}
                         </Pie>
                         {needle(value, data2, cx, cy, iR, oR, '#FFFAFA')}
-                        {/* currentOccupancy */}
                     </PieChart>
                 </ResponsiveContainer>
             </CardFooter>

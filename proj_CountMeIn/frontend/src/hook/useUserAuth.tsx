@@ -6,7 +6,7 @@ import { API_URLS } from '@/lib/urls';
 import { LoginSchema } from '@/lib/types';
 
 const useUserAuth = () => {
-    const { setToken, login, token } = useAuthContext();
+    const { setToken, login, token, isLogged } = useAuthContext();
     const [error, setError] = useState<string | null>(null);
 
     const loginMutation = useMutation({
@@ -34,7 +34,9 @@ const useUserAuth = () => {
         {
             enabled: !!token,
             onSuccess: (data) => {
-                login(data);
+                if (token) {
+                    login(data, token);
+                }
             },
             onError: (error: any) => {
                 setError(error.response?.data?.message || 'Failed to fetch user data.');
@@ -52,7 +54,9 @@ const useUserAuth = () => {
     return {
         login: loginMutation.mutateAsync,
         isLoading: loginMutation.isLoading,
+        loginMutation: loginMutation,
         error,
+        isLogged: isLogged(),
     };
 };
 

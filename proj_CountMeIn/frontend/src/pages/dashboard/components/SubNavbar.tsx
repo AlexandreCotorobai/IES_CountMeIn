@@ -25,7 +25,7 @@ import { useAuthContext } from '@/contexts/auth';
 import axios from 'axios';
 import { API_URLS } from '@/lib/urls';
 import { useMutation } from 'react-query';
-import { useMaxOccupancyContext } from '@/contexts/maxOccupancy';
+import { useRoomInfoContext } from '@/contexts/roomInformation';
 
 interface SubNavbarProps {
     status: string;
@@ -35,7 +35,7 @@ interface SubNavbarProps {
 const SubNavbar: React.FC<SubNavbarProps> = ({status}) => {
 
     const {token} = useAuthContext();
-    const {setMaxOccupancy} = useMaxOccupancyContext();
+    const {setMaxCapacity} = useRoomInfoContext();
 
     const form = useForm<SettingsSchema>({
         resolver: zodResolver(SettingsFormSchema),
@@ -58,8 +58,7 @@ const SubNavbar: React.FC<SubNavbarProps> = ({status}) => {
     {
         onSuccess: () => {
             console.log("Success");
-            setMaxOccupancy(() => form.getValues('maximumOccupancy'));
-        },
+            setMaxCapacity(form.getValues('maximumOccupancy'));        },
         onError: () => {
             console.log("Error");
         }
