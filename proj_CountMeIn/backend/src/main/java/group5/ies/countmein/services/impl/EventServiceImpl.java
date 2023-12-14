@@ -23,7 +23,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<EventDTO> getTodayEventByRoomId(long id) {
-        List<Event> events = eventRepository.findByRoomId(id);
+        List<Event> events = eventRepository.findByRoom_id(id);
 
         // filter events by today's date
         List<Event> todayEvents = events.stream().filter(event -> event.getDate().toInstant()
@@ -41,7 +41,7 @@ public class EventServiceImpl implements EventService {
     public List<MaxEventDTO> getWeekEventByRoomId(long id) {
         List<MaxEventDTO> result = new ArrayList<>();
 
-        List<Event> events = eventRepository.findByRoomId(id);
+        List<Event> events = eventRepository.findByRoom_id(id);
 
         // faz um for de 7 dias
         // para cada dia, filtra os eventos por esse dia
@@ -69,7 +69,7 @@ public class EventServiceImpl implements EventService {
     public List<MaxEventDTO> getMonthEventByRoomId(long id) {
         List<MaxEventDTO> result = new ArrayList<>();
 
-        List<Event> events = eventRepository.findByRoomId(id);
+        List<Event> events = eventRepository.findByRoom_id(id);
 
         // faz um for de 30 dias
         // para cada dia, filtra os eventos por esse dia

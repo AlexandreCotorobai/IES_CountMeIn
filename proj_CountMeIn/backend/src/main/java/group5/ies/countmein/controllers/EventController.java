@@ -20,21 +20,21 @@ public class EventController {
     @GetMapping("roomSettings/todayGraph")
     @PreAuthorize("@authServiceImpl.isAuthenticated(#token)")
     public ResponseEntity<Object> getTodayEvents(@RequestHeader("Authorization") String token,
-            @RequestParam(name = "roomId", required = true) Long roomId) {
-        return ResponseEntity.ok(eventService.getTodayEventByRoomId(roomId));
+            @RequestParam(name = "room_id", required = true) Long room_id) {
+        return ResponseEntity.ok(eventService.getTodayEventByRoomId(room_id));
     }
 
     @GetMapping("roomSettings/weekGraph")
     @PreAuthorize("@authServiceImpl.isAuthenticated(#token)")
     public ResponseEntity<Object> getWeekEvents(@RequestHeader("Authorization") String token,
-            @RequestParam(name = "roomId", required = true) Long roomId) {
-        return ResponseEntity.ok(eventService.getWeekEventByRoomId(roomId));
+            @RequestParam(name = "room_id", required = true) Long room_id) {
+        return ResponseEntity.ok(eventService.getWeekEventByRoomId(room_id));
     }
 
     @GetMapping("roomSettings/monthGraph")
     @PreAuthorize("@authServiceImpl.isAuthenticated(#token)")
     public ResponseEntity<Object> getMonthEvents(@RequestHeader("Authorization") String token,
-            @RequestParam(name = "roomId", required = true) Long roomId) {
-        return ResponseEntity.ok(eventService.getMonthEventByRoomId(roomId));
+            @RequestParam(name = "room_id", required = true) Long room_id) {
+        return ResponseEntity.ok(eventService.getMonthEventByRoomId(room_id));
     }
 }

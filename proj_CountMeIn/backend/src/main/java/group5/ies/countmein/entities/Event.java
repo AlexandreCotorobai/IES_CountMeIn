@@ -21,7 +21,6 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private long user_id;
     private long room_id;
     private int room_count;
     private Date date;
