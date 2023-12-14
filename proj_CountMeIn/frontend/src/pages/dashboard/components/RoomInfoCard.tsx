@@ -12,9 +12,8 @@ import { useQuery } from 'react-query';
 import { API_URLS } from '@/lib/urls';
 import axios from 'axios';
 import { useAuthContext } from '@/contexts/auth';
-import { useMaxOccupancyContext } from '@/contexts/maxOccupancy';
+import { useRoomInfoContext } from '@/contexts/roomInformation';
 import { RoomSettings } from '@/lib/types';
-import { set } from 'zod';
 
 interface RoomInfoCardProps {
 }
@@ -23,11 +22,8 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = () => {
 
     const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
     const {token} = useAuthContext();
-    const {maxOccupancy = 20, setMaxOccupancy} = useMaxOccupancyContext();
+    const {maxOccupancy = 20, setMaxOccupancy, currentCapacity = 0, setCurrentCapacity, upTime = 0, setUpTime} = useRoomInfoContext();
 
-
-    const [currentCapacity, setCurrentCapacity] = useState<number>(0);
-    const [upTime, setUpTime] = useState<number>(0);
 
     useQuery<RoomSettings>({
         queryKey: 'roomSettings',
@@ -38,9 +34,9 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = () => {
             return data;
         },
         onSuccess: (data) => {
-            setCurrentCapacity(()=> data.currentCapacity);
-            setUpTime(() => data.upTime);
-            setMaxOccupancy(()=> data.maxOccupancy);
+            setCurrentCapacity(data.currentCapacity);
+            setUpTime(data.upTime);
+            setMaxOccupancy(data.maxOccupancy);
         },
         onError: () => {
             console.log("Error");
@@ -154,7 +150,6 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = () => {
                         ))}
                         </Pie>
                         {needle(value, data2, cx, cy, iR, oR, '#FFFAFA')}
-                        {/* currentOccupancy */}
                     </PieChart>
                 </ResponsiveContainer>
             </CardFooter>

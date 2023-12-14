@@ -12,7 +12,7 @@ export interface IAuthContext {
     setToken: (token: string | null) => void;
     login: (auth: User) => void;
     isLogged: () => boolean;
-    logout: () => void;
+    logout: () => Promise<void>;
 }
 
 export const AuthContext = React.createContext<IAuthContext>({} as IAuthContext);
@@ -33,7 +33,7 @@ export const AuthProvider: React.FC<AuthProps> = ({children}: React.PropsWithChi
     const logout = async () => {
         setUser(null);
         setToken(null);
-        await queryClient.clear();
+        queryClient.clear();
     }
 
     const authCtx = useMemo<IAuthContext>(():IAuthContext => ({
