@@ -54,6 +54,7 @@ const useUserAuth = () => {
     return {
         login: loginMutation.mutateAsync,
         isLoading: loginMutation.isLoading,
+        loginMutation: loginMutation,
         error,
         isLogged: isLogged(),
     };
