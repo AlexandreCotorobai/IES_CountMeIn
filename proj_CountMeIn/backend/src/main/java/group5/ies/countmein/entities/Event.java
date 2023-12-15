@@ -18,7 +18,7 @@ import lombok.Setter;
 public class Event {
     @Id
     private String id;
-    private Integer room_id;
-    private Integer room_count;
+    private int room_id;
+    private int room_count;
     private Date date;
 }

@@ -1,8 +1,8 @@
-import {User, LoginSchema} from "@/lib/types";
-import React, {useState, useMemo, useEffect} from "react";
-import { useMutation, useQuery, QueryClient } from 'react-query';
-import axios from 'axios';
+import { LoginSchema, User } from "@/lib/types";
 import { API_URLS } from '@/lib/urls';
+import axios from 'axios';
+import React, { useEffect, useMemo, useState } from "react";
+import { QueryClient, useMutation, useQuery } from 'react-query';
 
 export interface AuthProps {
     children: React.ReactNode;
@@ -21,11 +21,11 @@ export interface IAuthContext {
 
 export const AuthContext = React.createContext<IAuthContext>({} as IAuthContext);
 
-export const AuthProvider: React.FC<AuthProps> = ({children}: React.PropsWithChildren<{}>) => {
+export const AuthProvider: React.FC<AuthProps> = ({ children }: React.PropsWithChildren<{}>) => {
     const [user, setUser] = useState<User | null>(null);
-    const [token, setToken] = useState<string | null >("");
+    const [token, setToken] = useState<string | null>("");
     const queryClient = new QueryClient();
-    
+
     const login = async (user: User, token: string) => {
         setUser(user);
         setToken(token);
@@ -69,7 +69,7 @@ export const AuthProvider: React.FC<AuthProps> = ({children}: React.PropsWithChi
         {
             enabled: !!token,
             onSuccess: (data) => {
-                if (token){
+                if (token) {
                     login(data, token);
                 }
             },
@@ -86,7 +86,7 @@ export const AuthProvider: React.FC<AuthProps> = ({children}: React.PropsWithChi
         }
     }, []);
 
-    const authCtx = useMemo<IAuthContext>(():IAuthContext => ({
+    const authCtx = useMemo<IAuthContext>((): IAuthContext => ({
         user,
         token,
         setToken,

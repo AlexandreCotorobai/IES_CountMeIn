@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import group5.ies.countmein.entities.Event;
@@ -23,7 +24,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<EventDTO> getTodayEventByRoomId(long id) {
-        List<Event> events = eventRepository.findByRoom_id(id);
+        List<Event> events = eventRepository.findByRoom_id(id, Sort.by("date"));
 
         // filter events by today's date
         List<Event> todayEvents = events.stream().filter(event -> event.getDate().toInstant()
@@ -41,12 +42,12 @@ public class EventServiceImpl implements EventService {
     public List<MaxEventDTO> getWeekEventByRoomId(long id) {
         List<MaxEventDTO> result = new ArrayList<>();
 
-        List<Event> events = eventRepository.findByRoom_id(id);
+        List<Event> events = eventRepository.findByRoom_id(id, Sort.by("date"));
 
         // faz um for de 7 dias
         // para cada dia, filtra os eventos por esse dia
         // guarda o evento com maior contagem na lista result
-        for (int i = 0; i < 7; i++) {
+        for (int i = 7; i >= 0; i--) {
             LocalDate date = LocalDate.now().minusDays(i);
             List<Event> dayEvents = events.stream().filter(event -> event.getDate().toInstant()
                     .atZone(ZoneId.systemDefault()).toLocalDate().equals(date)).collect(Collectors.toList());
@@ -69,12 +70,12 @@ public class EventServiceImpl implements EventService {
     public List<MaxEventDTO> getMonthEventByRoomId(long id) {
         List<MaxEventDTO> result = new ArrayList<>();
 
-        List<Event> events = eventRepository.findByRoom_id(id);
+        List<Event> events = eventRepository.findByRoom_id(id, Sort.by("date"));
 
         // faz um for de 30 dias
         // para cada dia, filtra os eventos por esse dia
         // guarda o evento com maior contagem na lista result
-        for (int i = 0; i < 30; i++) {
+        for (int i = 30; i >= 0; i--) {
             LocalDate date = LocalDate.now().minusDays(i);
             List<Event> dayEvents = events.stream().filter(event -> event.getDate().toInstant()
                     .atZone(ZoneId.systemDefault()).toLocalDate().equals(date)).collect(Collectors.toList());
