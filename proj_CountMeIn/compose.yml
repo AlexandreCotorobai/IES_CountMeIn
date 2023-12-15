@@ -54,13 +54,13 @@ services:
     depends_on:
       - kafka
 
-  # kafka_2_mongo_service:
-  #   build:
-  #     context: services
+  kafka_2_mongo_service:
+    build:
+      context: services
 
-  #   depends_on:
-  #     - kafka
-  #     - db_mongo
+    depends_on:
+      - kafka
+      - db_mongo
 
   web-app:
     build:
