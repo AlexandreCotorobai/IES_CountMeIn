@@ -5,7 +5,7 @@ import { LoginCard } from "./components/LoginCard";
 
 export function Component() {
     return (
-        <div className="relative flex flex-col min-h-screen justify-around pb-24">
+        <div className="relative flex flex-col min-h-screen-90 justify-around pb-24">
             <div className="flex flex-col relative z-10 items-center">
                 <LoginCard />
             </div>

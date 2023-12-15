@@ -3,7 +3,7 @@ import logo from "@/assets/CountMeIn_logo.svg"; // Ajuste o caminho conforme nec
 
 export function Component() {
   return (
-    <div className="flex min-h-screen pb-32">
+    <div className="flex pb-32">
       <main className="grid xs:grid-cols-1 justify-center items-center xl:grid-cols-2 w-full">
         {/* Ajuste o alinhamento dos itens com base no tamanho da tela */}
         <div className="xl:flex hidden justify-center xl:items-center items-start w-full h-full">

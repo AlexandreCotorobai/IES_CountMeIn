@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { AuthProvider } from "@/contexts/auth";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools"; // Import the necessary package
 import "./App.css";
 
 const queryClient = new QueryClient();
@@ -19,6 +20,7 @@ const App = () => {
                         <RouterProvider router={router}/>
                     </Suspense>
                 </AuthProvider>
+                <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
         </ThemeProvider>
     );
