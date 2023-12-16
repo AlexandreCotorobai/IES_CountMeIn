@@ -1,23 +1,58 @@
-import { ModeToggle } from "@/components/ModeToggle";
-import { Button } from "@/components/ui/button";
-import logo from "@/assets/CountMeIn_logo.svg"; // Ajuste o caminho conforme necessário
+import Sidebar from '@/pages/dashboard/components/Sidebar';
+import RoomInfoCard from '@/pages/dashboard/components/RoomInfoCard';
+import GraphCard from '@/pages/dashboard/components/graphComponents/GraphCard';
+import SubNavbar from '@/pages/dashboard/components/SubNavbar';
+import UpdateCard from '@/pages/dashboard/components/UpdateCard';
+import { useEffect, useState } from 'react';
+// Importe outros componentes necessários
 
 export function Component() {
+
+  const [roomInfo, setRoomInfo] = useState<number[]>([]);
+
+  useEffect(() => {
+    // generate a array with size 720 with random numbers between 1 and 15
+    const randomArray = Array.from({length: 720}, () => Math.floor(Math.random() * 15) + 1);
+
+    setRoomInfo(randomArray)
+  }, []); 
+
   return (
-    <div className="flex min-h-screen pb-32">
-      <main className="grid xs:grid-cols-1 justify-center items-center xl:grid-cols-2 w-full">
-        {/* Ajuste o alinhamento dos itens com base no tamanho da tela */}
-        <div className="xl:flex hidden justify-center xl:items-center items-start w-full h-full">
-            <img src={logo} alt="CountMeIn" className="h-5/12 w-5/12"/>
-        </div>
-        <div className="max-w-4xl rounded-xl text-center p-6 space-y-6">
-            <h1 className="xl:text-9xl md:text-8xl text-7xl font-normal font-['Lexend Exa']">Count Me In</h1>
-            <div className="bg-cyan-950 rounded-xl p-6 space-y-6">
-                <div className="text-center text-sky-100 text-xl font-normal font-['Ubuntu']">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquam faucibus purus in massa. Pellentesque elit ullamcorper dignissim cras tincidunt lobortis. Egestas erat imperdiet sed euismod. Volutpat maecenas volutpat blandit aliquam etiam erat. Felis bibendum ut tristique et egestas quis ipsum suspendisse. Amet consectetur adipiscing elit duis. Dignissim convallis aenean et tortor at risus viverra. Donec ac odio tempor orci dapibus ultrices in iaculis. Morbi tempus iaculis urna id volutpat. Consectetur adipiscing elit pellentesque habitant. Id venenatis a condimentum vitae sapien pellentesque habitant morbi.<br/><br/>Quis hendrerit dolor magna eget est lorem. Eros donec ac odio tempor orci dapibus ultrices. Sed nisi lacus sed viverra tellus in hac. Vitae tempus quam pellentesque nec nam aliquam sem et. Ut faucibus pulvinar elementum integer enim neque volutpat ac. Turpis egestas maecenas pharetra convallis posuere morbi leo urna molestie. Enim diam vulputate ut pharetra sit amet. Aenean et tortor at risus viverra adipiscing at. Consectetur a erat nam at lectus. Pretium viverra suspendisse potenti nullam ac tortor vitae purus.<br/><br/></div>
-                <Button className="text-sky-100 rounded-full">Contact Us</Button>
+    <div className="min-h-screen-85 bg-dark">
+      {/* Sidebar */}
+      <div>
+        <Sidebar />
+      </div>
+      {/* Conteúdo principal */}
+      <div className="flex-col p-4 md:flex">
+        <div className='border-b border-blue-400'>
+          <div className='flex h-16 bg-blue-400 justify-between rounded-t-sm items-center px-4'>
+            {/* Ser alterado depois quando fizer o contexto */}
+            <div className='text-2xl font-bold rounded-md bg-sky-900 p-2'>
+                Room Information
             </div>
+            <SubNavbar status='Online'/>
+          </div>
         </div>
-      </main>
+        {/* Conteúdo */}
+        <div className="flex-grow border bg-cyan-950 rounded-b-sm p-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 pl-3 pt-3">
+            {/* Cartões de informação */}
+            <div className="order-1">
+              <UpdateCard lastUpdated='12:00:00' fetchUpdate={() => console.log('Fetch Update')} />
+              {/* Primeiro card da primeira coluna */}
+            </div>
+            <div className="order-3 col-span-2 lg:col-span-3 lg:row-span-3 lg:order-2">
+              {/* Card que ocupa as duas colunas */}
+              <GraphCard/>
+            </div>
+            <div className='lg:order-3 order-2'>
+              <RoomInfoCard/>
+              {/* Segundo card da primeira coluna */}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

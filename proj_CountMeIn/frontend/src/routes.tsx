@@ -1,7 +1,6 @@
-import React, { Suspense } from 'react';
-import CleanLayout from "./layouts";
+import { Suspense, lazy } from 'react';
 import { CustomRoute } from "./components/ProtectedRoute";
-import { lazy } from 'react';
+import CleanLayout from "./layouts";
 
 const HomeComponent = lazy(() => import("./pages/home"));
 const LoginComponent = lazy(() => import("./pages/login"));
@@ -13,7 +12,7 @@ const routes = [
         element: <CleanLayout />,
         children: [
             {
-                path: "/", 
+                path: "/",
                 element: (
                     <Suspense fallback={<div>Loading Home...</div>}>
                         <HomeComponent />
@@ -21,7 +20,7 @@ const routes = [
                 )
             },
             {
-                path: "/login", 
+                path: "/login",
                 element: (
                     <Suspense fallback={<div>Loading Login...</div>}>
                         <CustomRoute page={LoginComponent} isPublic={true} />
@@ -29,10 +28,10 @@ const routes = [
                 )
             },
             {
-                path: "/dashboard", 
+                path: "/dashboard",
                 element: (
                     <Suspense fallback={<div>Loading Dashboard...</div>}>
-                        <CustomRoute page={DashboardComponent} />
+                        <CustomRoute page={DashboardComponent} redirectTo='/dashboard' />
                     </Suspense>
                 )
             }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import axios from 'axios';
 import { useAuthContext } from '@/contexts/auth';
@@ -6,7 +6,7 @@ import { API_URLS } from '@/lib/urls';
 import { LoginSchema } from '@/lib/types';
 
 const useUserAuth = () => {
-    const { setToken, login, token } = useAuthContext();
+    const { setToken, login, token, isLogged } = useAuthContext();
     const [error, setError] = useState<string | null>(null);
 
     const loginMutation = useMutation({
@@ -16,6 +16,7 @@ const useUserAuth = () => {
         },
         onSuccess: (data) => {
             setToken(data.token);
+            localStorage.setItem('token', data.token);
         },
         onError: (error: any) => {
             setError(error.response?.data?.message || 'Login failed. Please try again.');
@@ -33,7 +34,9 @@ const useUserAuth = () => {
         {
             enabled: !!token,
             onSuccess: (data) => {
-                login(data);
+                if (token) {
+                    login(data, token);
+                }
             },
             onError: (error: any) => {
                 setError(error.response?.data?.message || 'Failed to fetch user data.');
@@ -41,10 +44,19 @@ const useUserAuth = () => {
         }
     );
 
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            setToken(token);
+        }
+    }, []);
+
     return {
         login: loginMutation.mutateAsync,
         isLoading: loginMutation.isLoading,
+        loginMutation: loginMutation,
         error,
+        isLogged: isLogged(),
     };
 };
 

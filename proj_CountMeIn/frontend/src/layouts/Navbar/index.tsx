@@ -7,11 +7,12 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { LogOut } from 'lucide-react';
 import { useTheme } from "@/components/ThemeProvider"
+import { useAuthContext } from "@/contexts/auth"
 
 
 
 const NavBar: React.FC = () => {
-  const isAuthenticated = false;
+  const { isLogged } = useAuthContext()
   const { theme } = useTheme()
 
   return (
@@ -25,9 +26,9 @@ const NavBar: React.FC = () => {
         <div className='p-3'>
             <ModeToggle />
         </div>
-        {isAuthenticated ? (
+        {isLogged() ? (
           <>
-            <Link to="/admindashboard">
+            <Link to="/dashboard">
               <NavBarButton label='Admin DashBoard'/>
             </Link>
             <Link to="/logout" className='pl-5'>
@@ -38,11 +39,9 @@ const NavBar: React.FC = () => {
             </Link>
           </>
         ) : (
-            <>
-             <Link to="/login">
+            <Link to="/login">
                 <NavBarButton label='Login'/>
-              </Link> 
-            </>
+            </Link>
         )}
       </div>
     </nav>

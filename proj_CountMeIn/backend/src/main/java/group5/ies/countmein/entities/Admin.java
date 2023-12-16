@@ -36,7 +36,7 @@ public class Admin {
     private String password;
 
     @OneToMany(mappedBy = "admin")
-    private List<Sala> salas;
+    private List<Room> salas;
 
     public boolean checkPassword(String password) {
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();

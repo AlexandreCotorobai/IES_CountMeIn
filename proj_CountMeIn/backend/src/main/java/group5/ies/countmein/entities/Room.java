@@ -21,9 +21,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "salas")
-public class Sala {
+public class Room {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // acho que vou ter de tirar isto
     private long id;
     @Column(nullable = false, unique = true)
     private String name;

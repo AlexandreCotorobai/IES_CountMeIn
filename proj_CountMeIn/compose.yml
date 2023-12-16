@@ -30,7 +30,7 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - 22181:2181
-  
+
   kafka:
     image: confluentinc/cp-kafka:latest
     depends_on:
@@ -53,9 +53,9 @@ services:
       KAFKA_BROKERCONNECT: kafka:9092
     depends_on:
       - kafka
-      
+
   kafka_2_mongo_service:
-    build: 
+    build:
       context: services
 
     depends_on:
@@ -63,35 +63,33 @@ services:
       - db_mongo
 
   web-app:
-    build: 
+    build:
       context: frontend
     ports:
       - 3000:3000
     volumes:
       - node_modules:/frontend/node_modules
       - ./frontend:/frontend
-    restart:
-      unless-stopped
-
-  api:
-    depends_on:
-      - db_pg
-      - db_mongo
-    build: 
-      context: backend
-    restart:
-      unless-stopped
-    ports:
-      - 8000:8000
-    environment:
-      SPRING_APPLICATION_JSON: '{
-        "spring.datasource.url" : "jdbc:postgresql://localhost:5432/countmein",
-        "spring.datasource.username" : "postgres",
-        "spring.datasource.password" : "postgres",
-        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.PostgreSQLDialect",
-        "jwt.secret" : "3278a107eddccc12c83349a310f3a298928bb05f55a4e289acda858bbc73ad40",
-        "jwt.expiration" : "600",
-        "logging.level.org.springframework" : "DEBUG" }'
+    restart: unless-stopped
+  # api:
+  #   depends_on:
+  #     - db_pg
+  #     - db_mongo
+  #   build: 
+  #     context: backend
+  #   restart:
+  #     unless-stopped
+  #   ports:
+  #     - 8000:8000
+  #   environment:
+  #     SPRING_APPLICATION_JSON: '{
+  #       "spring.datasource.url" : "jdbc:postgresql://localhost:5432/countmein",
+  #       "spring.datasource.username" : "postgres",
+  #       "spring.datasource.password" : "postgres",
+  #       "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.PostgreSQLDialect",
+  #       "jwt.secret" : "3278a107eddccc12c83349a310f3a298928bb05f55a4e289acda858bbc73ad40",
+  #       "jwt.expiration" : "600",
+  #       "logging.level.org.springframework" : "DEBUG" }'
 
 volumes:
   pg_data:
@@ -100,4 +98,3 @@ volumes:
     driver: local
   node_modules:
     driver: local
-  
