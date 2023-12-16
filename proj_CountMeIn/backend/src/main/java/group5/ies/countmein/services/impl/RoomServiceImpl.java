@@ -41,10 +41,15 @@ public class RoomServiceImpl implements RoomService {
             List<Event> events = eventRepository.findByRoom_id(id, Sort.by("date"));
             Event lastEvent = events.get(events.size() - 1);
             RoomStatusResponse response = new RoomStatusResponse(lastEvent.getRoom_count(),
-                    roomOptional.get().getCapacity());
+                    roomOptional.get().getCapacity(), 0);
             return response;
         } else {
             return null;
         }
+    }
+
+    @Override
+    public List<Room> getAllRooms() {
+        return roomRepository.findAll();
     }
 }

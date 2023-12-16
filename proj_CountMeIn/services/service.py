@@ -28,7 +28,7 @@ consumer = Consumer({
 })
 
 client = MongoClient('mongodb://localhost:27017/')
-db = client['countmein']
+db = client['events']
 collection = db['data']
 
 consumer.subscribe(['countmein'])

@@ -10,4 +10,5 @@ import lombok.Getter;
 public class RoomStatusResponse {
     private int currentOccupancy;
     private int maxCapacity;
+    private int upTime;
 }
