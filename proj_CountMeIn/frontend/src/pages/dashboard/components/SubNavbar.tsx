@@ -58,7 +58,8 @@ const SubNavbar: React.FC<SubNavbarProps> = ({status}) => {
     {
         onSuccess: () => {
             console.log("Success");
-            setMaxCapacity(form.getValues('maximumOccupancy'));        },
+            setMaxCapacity(form.getValues('maxCapacity'));        
+        },
         onError: () => {
             console.log("Error");
         }
@@ -88,7 +89,7 @@ const SubNavbar: React.FC<SubNavbarProps> = ({status}) => {
                                <form onSubmit={form.handleSubmit(onSubmit)} className='w-full text-center space-y-12'>
                                     <FormField
                                         control={form.control}
-                                        name="maximumOccupancy"
+                                        name="maxCapacity"
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel className="text-2xl font-semibold">Maximum Occupancy</FormLabel>

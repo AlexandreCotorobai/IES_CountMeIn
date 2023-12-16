@@ -15,16 +15,16 @@ export function LoginCard() {
 
 
     return (
-        <Card className="items-center px-10">
-        <CardHeader className="space-y-1">
-            <CardTitle className="text-center md:text-3xl sm:text-2xl">Login</CardTitle>
-        </CardHeader>
-        <CardContent className="grid gap-4">
-            <LoginForm />
-        </CardContent>
-        <CardFooter>
-            <Button variant="link" className="text-white">Having problems? Contact Us</Button>
-        </CardFooter>
+        <Card className="items-center bg-cyan-950 px-10">
+            <CardHeader className="space-y-1">
+                <CardTitle className="text-center md:text-3xl sm:text-2xl">Login</CardTitle>
+            </CardHeader>
+            <CardContent className="grid gap-4">
+                <LoginForm />
+            </CardContent>
+            <CardFooter>
+                <Button variant="link" className="text-white">Having problems? Contact Us</Button>
+            </CardFooter>
         </Card>
     );
 }

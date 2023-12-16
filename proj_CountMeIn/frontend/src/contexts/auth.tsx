@@ -10,7 +10,7 @@ export interface AuthProps {
 
 export interface IAuthContext {
     user: User | null;
-    token: string,
+    token: string | null,
     setToken: (token: string | null) => void;
     login: (user: User, token: string) => Promise<void>;
     isLogged: () => boolean;
@@ -23,7 +23,7 @@ export const AuthContext = React.createContext<IAuthContext>({} as IAuthContext)
 
 export const AuthProvider: React.FC<AuthProps> = ({children}: React.PropsWithChildren<{}>) => {
     const [user, setUser] = useState<User | null>(null);
-    const [token, setToken] = useState<string | null >("");
+    const [token, setToken] = useState<string | null >(null);
     const queryClient = new QueryClient();
     
     const login = async (user: User, token: string) => {
@@ -69,6 +69,7 @@ export const AuthProvider: React.FC<AuthProps> = ({children}: React.PropsWithChi
         {
             enabled: !!token,
             onSuccess: (data) => {
+                console.log(data)
                 if (token){
                     login(data, token);
                 }

@@ -14,6 +14,7 @@ import axios from 'axios';
 import { useAuthContext } from '@/contexts/auth';
 import { useRoomInfoContext } from '@/contexts/roomInformation';
 import { RoomSettings } from '@/lib/types';
+import Loading from "@/components/Loading";
 
 interface RoomInfoCardProps {
 }
@@ -29,7 +30,7 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = () => {
         setMaxCapacity(20);
     }, [setMaxCapacity]);
 
-    useQuery<RoomSettings>({
+    const {status} = useQuery<RoomSettings>({
         queryKey: 'roomSettings',
         queryFn: async () => {
             const { data } = await axios.get(API_URLS.generalInfo, {
@@ -127,39 +128,41 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = () => {
 
     
     return (
-        <Card className="items-center space-y-5 bg-sky-900 px-10">
-            <CardHeader className="space-y-2 lg:text-start text-center">
-                <CardTitle className="text-2xl font-semibold">General Info:</CardTitle>
-            </CardHeader>
-            <CardContent className="grid gap-y-7 text-center font-semibold text-2xl">
-                <div>Uptime: {upTime} Hours</div>
-                <div>Current Occupancy: {currentOccupancy}</div>
-                <div>Maximum Occupancy: {maxCapacity}</div>
-            </CardContent>
-            <CardFooter className='hidden lg:block'>
-                <ResponsiveContainer width="100%" height={250} className={"bg-cyan-950 rounded-lg"}>
-                    <PieChart width={400} height={500} className='translate-y-6'>
-                        <Pie
-                        dataKey="maxValue"
-                        startAngle={180}
-                        endAngle={0}
-                        data={data2}
-                        cx={cx}
-                        cy={cy}
-                        innerRadius={iR}
-                        outerRadius={oR}
-                        fill="#8884d8"
-                        stroke="none"
-                        >
-                        {data2.map((entry) => (
-                            <Cell key={entry.id} fill={entry.color} />
-                        ))}
-                        </Pie>
-                        {needle(value, data2, cx, cy, iR, oR, '#FFFAFA')}
-                    </PieChart>
-                </ResponsiveContainer>
-            </CardFooter>
-        </Card>
+        // <Loading status={status}>
+            <Card className="items-center border-transparent shadow-xl space-y-5 bg-sky-900 px-10">
+                <CardHeader className="space-y-2 lg:text-start text-center">
+                    <CardTitle className="text-2xl font-semibold">General Info:</CardTitle>
+                </CardHeader>
+                <CardContent className="grid gap-y-7 text-center font-semibold text-2xl">
+                    <div>Uptime: {upTime} Hours</div>
+                    <div>Current Occupancy: {currentOccupancy}</div>
+                    <div>Maximum Occupancy: {maxCapacity}</div>
+                </CardContent>
+                <CardFooter className='hidden lg:block'>
+                    <ResponsiveContainer width="100%" height={250} className={"bg-cyan-950 rounded-lg"}>
+                        <PieChart width={400} height={500} className='translate-y-6'>
+                            <Pie
+                            dataKey="maxValue"
+                            startAngle={180}
+                            endAngle={0}
+                            data={data2}
+                            cx={cx}
+                            cy={cy}
+                            innerRadius={iR}
+                            outerRadius={oR}
+                            fill="#8884d8"
+                            stroke="none"
+                            >
+                            {data2.map((entry) => (
+                                <Cell key={entry.id} fill={entry.color} />
+                            ))}
+                            </Pie>
+                            {needle(value, data2, cx, cy, iR, oR, '#FFFAFA')}
+                        </PieChart>
+                    </ResponsiveContainer>
+                </CardFooter>
+            </Card>
+        // </Loading>
     );
 };
 

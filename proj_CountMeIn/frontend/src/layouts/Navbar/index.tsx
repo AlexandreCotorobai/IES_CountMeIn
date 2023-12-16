@@ -12,7 +12,7 @@ import { useAuthContext } from "@/contexts/auth"
 
 
 const NavBar: React.FC = () => {
-  const { isLogged } = useAuthContext()
+  const { isLogged, logout } = useAuthContext()
   const { theme } = useTheme()
 
   return (
@@ -31,12 +31,13 @@ const NavBar: React.FC = () => {
             <Link to="/dashboard">
               <NavBarButton label='Admin DashBoard'/>
             </Link>
-            <Link to="/logout" className='pl-5'>
-                  <Button className='rounded-full'>
-                    <LogOut className={`h-[1.4rem] w-[1.4rem] rotate-0 scale-100 transition-all ${theme === 'dark' ? 'text-primary' : 'text-primary'}`} />
-                    <span className="sr-only">Logout</span>
-                  </Button>
-            </Link>
+            <Button className='rounded-full pl-5' onClick={(event) => {
+              event.preventDefault();
+              logout();
+            }}>
+              <LogOut className={`h-[1.4rem] w-[1.4rem] rotate-0 scale-100 transition-all ${theme === 'dark' ? 'text-white' : 'text-primary'}`} />
+                  <span className="sr-only">Logout</span>
+            </Button>
           </>
         ) : (
             <Link to="/login">

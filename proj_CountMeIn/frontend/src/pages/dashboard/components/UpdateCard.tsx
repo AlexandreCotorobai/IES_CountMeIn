@@ -15,7 +15,7 @@ interface UpdateCardProps {
 
 const UpdateCard: React.FC<UpdateCardProps> = ({lastUpdated, fetchUpdate}) => {
     return (
-        <Card className="items-center border-sky-900 shadow-lg bg-sky-900 px-10 lg:h-auto h-full">
+        <Card className="items-center border-sky-900 shadow-xl bg-sky-900 px-10 lg:h-auto h-full">
                 <CardHeader className="space-y-1">
                 </CardHeader>
                 <CardContent className="flex items-center text-center pt-10  lg:p-0 justify-around gap-4">
