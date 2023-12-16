@@ -8,7 +8,7 @@ import time
 while True:
     try:
         admin_client = AdminClient({
-            "bootstrap.servers": "localhost:29092"
+            "bootstrap.servers": "kafka:9092"
             })
         topics = admin_client.list_topics(timeout=5).topics
         break
@@ -22,12 +22,12 @@ if "countmein" not in topics:
     admin_client.create_topics(new_topics)
 
 consumer = Consumer({
-    'bootstrap.servers': 'localhost:29092',
+    'bootstrap.servers': 'kafka:9092',
     'group.id': 'mygroup',
     'auto.offset.reset': 'earliest'
 })
 
-client = MongoClient('mongodb://localhost:27017/')
+client = MongoClient('mongodb://db_mongo:27017/')
 db = client['events']
 collection = db['data']
 
@@ -47,3 +47,4 @@ while True:
     if msg_value:  # Check if the message value is not empty
         data = json.loads(msg_value)
         collection.insert_one(data)
+        print(f"saved {data} to db")
