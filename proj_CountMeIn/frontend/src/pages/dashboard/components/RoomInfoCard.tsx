@@ -24,7 +24,7 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = ({roomId}) => {
 
     const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
     const {token} = useAuthContext();
-    const {maxCapacity, setMaxCapacity, currentOccupancy, setCurrentOccupancy, upTime, setUpTime} = useRoomInfoContext();
+    const {maxCapacity, setMaxCapacity, currentOccupancy, setCurrentOccupancy, setUpTime, setLastUpdate} = useRoomInfoContext();
 
     //apagar isto depois
     // useEffect(() => {
@@ -38,6 +38,11 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = ({roomId}) => {
                 headers: { Authorization: `Bearer ${token}` },
                 params: { room_id: roomId },
             });
+            if (data.currentOccupancy > data.maxCapacity) {
+                console.log(`Current occupancy: ${data.currentOccupancy} > max capacity: ${data.maxCapacity}`);
+            }
+
+            setLastUpdate(new Date().toISOString());
             return data;
         },
         onSuccess: (data) => {
@@ -56,6 +61,7 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = ({roomId}) => {
           setMaxCapacity(data?.maxCapacity);
           setCurrentOccupancy(data?.currentOccupancy);
           setUpTime(data?.upTime);
+          setLastUpdate(new Date().toISOString());
         }
       }, [status, data]);
 
@@ -85,19 +91,19 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = ({roomId}) => {
     const data2 = [
         {
             id: 'A',
-            name: 'A',
+            name: 'Green Area',
             maxValue: maxCapacity*0.6,
             color: '#82ca9d',
         },
         {
             id: 'B',
-            name: 'B',
+            name: 'Yellow Area',
             maxValue: maxCapacity*0.2,
             color: '#ffc658',
         },
         {
             id: 'C',
-            name: 'C',
+            name: 'Red Area',
             maxValue: maxCapacity*0.1,
             color: '#ff0000',
         },
@@ -139,7 +145,7 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = ({roomId}) => {
     
     return (
         // <Loading status={status}>
-            <Card className="items-center border-transparent shadow-xl space-y-5 bg-sky-900 px-10">
+            <Card className="items-center border-transparent shadow-xl space-y-2 bg-sky-900 px-10">
                 <CardHeader className="space-y-2 lg:text-start text-center">
                     <CardTitle className="text-2xl font-semibold">General Info:</CardTitle>
                 </CardHeader>
@@ -153,8 +159,8 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = ({roomId}) => {
                         <PieChart width={400} height={500} className='translate-y-6'>
                             <Pie
                             dataKey="maxValue"
-                            startAngle={180}
-                            endAngle={0}
+                            startAngle={190}
+                            endAngle={-10}
                             data={data2}
                             cx={cx}
                             cy={cy}

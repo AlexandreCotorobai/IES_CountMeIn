@@ -15,6 +15,8 @@ export interface IRoomInfoContext {
     setRoomId: (roomId: number) => void;
     locked: boolean;
     setLocked: (locked: boolean) => void;
+    lastUpdate: string;
+    setLastUpdate: (date: string) => void;
 }
 
 export const RoomInfoContext = React.createContext<IRoomInfoContext>({} as IRoomInfoContext);
@@ -25,6 +27,7 @@ export const RoomInfoProvider: React.FC<RoomInfoContextProps> = ({ children }) =
     const [upTime, setUpTime] = useState<number>(0);
     const [roomId, setRoomId] = useState<number>(0);
     const [locked, setLocked] = useState<boolean>(false);
+    const [lastUpdate, setLastUpdate] = useState<string>("");
 
     
     //pode dar porcaria, se der é aqui!
@@ -33,6 +36,7 @@ export const RoomInfoProvider: React.FC<RoomInfoContextProps> = ({ children }) =
     const handleSetUpTime = useCallback((time: number) => setUpTime(time), []);
     const handleSetRoomId = useCallback((id: number) => setRoomId(id), []);
     const handleSetLocked = useCallback((lock: boolean) => setLocked(lock), []);
+    const handleSetLastUpdate = useCallback((date: string) => setLastUpdate(date), []);
 
     const value = useMemo(() => ({
         maxCapacity,
@@ -44,8 +48,10 @@ export const RoomInfoProvider: React.FC<RoomInfoContextProps> = ({ children }) =
         roomId,
         setRoomId: handleSetRoomId,
         locked,
-        setLocked: handleSetLocked
-    }), [maxCapacity, currentOccupancy, upTime, roomId, locked,handleSetMaxCapacity, handleSetCurrentOccupancy, handleSetUpTime, handleSetRoomId, handleSetLocked]);
+        setLocked: handleSetLocked,
+        lastUpdate,
+        setLastUpdate: handleSetLastUpdate
+    }), [maxCapacity, currentOccupancy, upTime, roomId, locked, lastUpdate,handleSetMaxCapacity, handleSetCurrentOccupancy, handleSetUpTime, handleSetRoomId, handleSetLocked, handleSetLastUpdate]);
 
     return (
         <RoomInfoContext.Provider value={value}>

@@ -22,7 +22,7 @@ export function Component() {
 
   const {token} = useAuthContext();
 
-  const {roomId, setRoomId, locked, setLocked} = useRoomInfoContext();
+  const {roomId, setRoomId, locked, setLocked, setLastUpdate} = useRoomInfoContext();
 
   const {data: rooms , status} = useQuery<Partial<Room[]>>({
     queryKey: 'rooms',
@@ -48,6 +48,7 @@ export function Component() {
 
   useEffect(() => {
     console.log(`Room ID changed: ${roomId}`);
+    setLastUpdate(new Date().toISOString());
   }, [roomId]);
 
   const [isOpen, setIsOpen] = useState(true);
@@ -65,9 +66,9 @@ return (
           <div className={`flex items-center rounded-tr-lg bg-sky-400`}>
             <CollapsibleTrigger asChild>
                 <Button className='bg-trasnparent hover:bg-transparent' size="sm">
-                  {isOpen ? <ChevronLeft className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+                  {isOpen ? <ChevronLeft strokeWidth={3} className="h-4 w-4 font-bold text-sky-100" /> : <ChevronRight strokeWidth={3} className="h-4 w-4 font-bold text-sky-100" />}
                   <span className="sr-only">Toggle</span>
-                  <div className={`text-2xl font-bold p-5 ${isOpen ? 'block' : 'hidden'}`}>
+                  <div className={`text-2xl text-white font-bold p-5 ${isOpen ? 'block' : 'hidden'}`}>
                       Room List
                   </div>
                 </Button>
@@ -80,7 +81,7 @@ return (
                 if (room) {
                   return (
                     <div key={room.id} 
-                    className={`px-4 py-2 text-center cursor-pointer text-xl shadow-sm relative ${roomId === room.id ? 'bg-sky-900' : ''} ${index === rooms.length - 1 ? 'rounded-br-xl' : ''}`} 
+                    className={`px-4 py-2 font-semibold text-center hover:bg-sky-900 cursor-pointer text-xl shadow-sm relative ${roomId === room.id ? 'bg-sky-900' : ''} ${index === rooms.length - 1 ? 'rounded-br-xl' : ''}`} 
                     onClick={() => {
                         setRoomId(room.id);
                         setLocked(room.locked);
@@ -93,6 +94,7 @@ return (
                     }}
                     tabIndex={0}>
                       {room.name}
+                      <span className={`h-3 w-3 absolute rounded-full top-1/3 right-4 animate-glow ${!room.locked ? 'bg-green-500 shadow-green' : 'bg-red-500 shadow-red'}`} />
                       {roomId === room.id && <div className="absolute rounded-r-xl left-0 top-0 bottom-0 w-2 bg-sky-400"></div>}
                     </div>
                   )
@@ -122,7 +124,7 @@ return (
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 pl-3 pt-3">
               {/* Cartões de informação */}
               <div className="order-1">
-                <UpdateCard lastUpdated='12:00:00' fetchUpdate={() => console.log('Fetch Update')} />
+                <UpdateCard/>
                 {/* Primeiro card da primeira coluna */}
               </div>
               <div className="order-3 col-span-2 lg:col-span-3 lg:row-span-3 lg:order-2">

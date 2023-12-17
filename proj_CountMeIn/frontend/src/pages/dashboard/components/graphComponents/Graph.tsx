@@ -7,7 +7,8 @@ interface GraphProps {
 }
 
 const Graph: React.FC<GraphProps> = ({ value }) => {
-    // const { token } = useAuthContext();
+  
+    const { token } = useAuthContext();
 
     useEffect(() => {
         let url;
@@ -77,7 +78,7 @@ const Graph: React.FC<GraphProps> = ({ value }) => {
           ];
 
           return (
-            <div className="rounded-lg p-5 bg-gray-800" style={{ width: '100%', height: '610px' }}>
+            <div className="rounded-lg p-5 bg-gray-800" style={{ width: '100%', height: '620px' }}>
                 <AreaChart
                     width={1220}
                     height={590}

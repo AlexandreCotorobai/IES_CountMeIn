@@ -19,7 +19,7 @@ import {
   } from "@/components/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {SettingsFormSchema, SettingsSchema} from "@/lib/types"
-import { useForm } from 'react-hook-form';
+import { set, useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { useAuthContext } from '@/contexts/auth';
 import axios from 'axios';
@@ -37,7 +37,7 @@ interface SubNavbarProps {
 const SubNavbar: React.FC<SubNavbarProps> = ({roomId, locked}) => {
 
     const {token} = useAuthContext();
-    const {setMaxCapacity, maxCapacity, setLocked} = useRoomInfoContext();
+    const {setMaxCapacity, maxCapacity, setLocked, setLastUpdate} = useRoomInfoContext();
     const queryClient = useQueryClient();
 
     
@@ -70,6 +70,7 @@ const SubNavbar: React.FC<SubNavbarProps> = ({roomId, locked}) => {
             setMaxCapacity(form.getValues('maxCapacity') ?? maxCapacity);
             setLocked(form.getValues('locked'));
             queryClient.invalidateQueries('rooms'); // Invalida a consulta 'rooms'
+            setLastUpdate(new Date().toISOString());
         },
         onError: () => {
             console.log("Error");
