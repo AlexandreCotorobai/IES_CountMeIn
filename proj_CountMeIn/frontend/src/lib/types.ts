@@ -41,9 +41,14 @@ export const LoginFormSchema = z.object({
     upTime: number;
   }
 
-  export interface Room extends RoomSettings{
+  export interface Room extends RoomSettings, RoomData {
     id: number;
     name: string;
     address: string;
     locked: boolean;
+  }
+
+  export interface RoomData {
+    room_count: number;
+    date: string;
   }

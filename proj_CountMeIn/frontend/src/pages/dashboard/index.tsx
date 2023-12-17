@@ -24,7 +24,7 @@ export function Component() {
 
   const {roomId, setRoomId, locked, setLocked, setLastUpdate} = useRoomInfoContext();
 
-  const {data: rooms , status} = useQuery<Partial<Room[]>>({
+  const {data: rooms } = useQuery<Partial<Room[]>>({
     queryKey: 'rooms',
     queryFn: async () => {
       const { data } = await axios.get(API_URLS.rooms, {
@@ -129,7 +129,7 @@ return (
               </div>
               <div className="order-3 col-span-2 lg:col-span-3 lg:row-span-3 lg:order-2">
                 {/* Card que ocupa as duas colunas */}
-                <GraphCard/>
+                <GraphCard roomId={roomId}/>
               </div>
               <div className='lg:order-3 order-2'>
                 <RoomInfoCard roomId={roomId}/>

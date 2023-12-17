@@ -8,7 +8,11 @@ import {
   } from "@/components/ui/select"
 import Graph from '@/pages/dashboard/components/graphComponents/Graph';
 
-const GraphCard: React.FC = () => {
+interface GraphCardProps {
+    roomId: number
+}
+
+const GraphCard: React.FC<GraphCardProps> = ({ roomId }) => {
     const [selectedValue, setSelectedValue] = useState('today');
 
     const handleValueChange = (value: string) => {
@@ -32,9 +36,9 @@ const GraphCard: React.FC = () => {
                 </Select>
             </div>
             <div className='p-5 bg-cyan-950 rounded-lg'>
-                {selectedValue === 'today' && <div><Graph value={"today"}/></div>}
-                {selectedValue === 'weekly' && <div><Graph value={"weekly"}/></div>}
-                {selectedValue === 'monthly' && <div><Graph value={"monthly"}/></div>}
+                {selectedValue === 'today' && <div><Graph value={"today"} roomId={roomId}/></div>}
+                {selectedValue === 'weekly' && <div><Graph value={"weekly"} roomId={roomId}/></div>}
+                {selectedValue === 'monthly' && <div><Graph value={"monthly"} roomId={roomId}/></div>}
             </div>
         </div>
     );

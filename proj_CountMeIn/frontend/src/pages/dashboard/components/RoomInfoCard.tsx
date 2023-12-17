@@ -138,7 +138,7 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = ({roomId}) => {
         return [
           <circle key="circle" cx={x0} cy={y0} r={r} fill={color} stroke="none" />,
           <path key="path" d={`M${xba} ${yba}L${xbb} ${ybb} L${xp} ${yp} L${xba} ${yba}`} stroke="#none" fill={color} strokeWidth={2} />,
-          <text key="text" x={cx} y={cy + 40} fill="#ffffff" fontSize={"20"} textAnchor="middle">{`${currentOccupancy}/${maxCapacity}`}</text>
+          <text key="text" x={cx + 5} y={cy + 40} fill="#ffffff" fontSize={"20"} textAnchor="middle">{`${currentOccupancy}/${maxCapacity}`}</text>
         ];
       };
 
@@ -147,7 +147,7 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = ({roomId}) => {
         // <Loading status={status}>
             <Card className="items-center border-transparent shadow-xl space-y-2 bg-sky-900 px-10">
                 <CardHeader className="space-y-2 lg:text-start text-center">
-                    <CardTitle className="text-2xl font-semibold">General Info:</CardTitle>
+                    <CardTitle className="text-3xl font-semibold">General Info:</CardTitle>
                 </CardHeader>
                 <CardContent className="grid gap-y-7 text-center font-semibold text-2xl">
                     <div>Uptime: {data?.upTime} Hours</div>
@@ -159,8 +159,8 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = ({roomId}) => {
                         <PieChart width={400} height={500} className='translate-y-6'>
                             <Pie
                             dataKey="maxValue"
-                            startAngle={190}
-                            endAngle={-10}
+                            startAngle={180}
+                            endAngle={0}
                             data={data2}
                             cx={cx}
                             cy={cy}
