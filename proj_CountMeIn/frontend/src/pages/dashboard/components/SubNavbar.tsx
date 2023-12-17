@@ -24,41 +24,52 @@ import { Input } from '@/components/ui/input';
 import { useAuthContext } from '@/contexts/auth';
 import axios from 'axios';
 import { API_URLS } from '@/lib/urls';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { useRoomInfoContext } from '@/contexts/roomInformation';
 
+
 interface SubNavbarProps {
-    status: string;
+    roomId: number;
+    locked: boolean;
 }
 
 
-const SubNavbar: React.FC<SubNavbarProps> = ({status}) => {
+const SubNavbar: React.FC<SubNavbarProps> = ({roomId, locked}) => {
 
     const {token} = useAuthContext();
-    const {setMaxCapacity} = useRoomInfoContext();
+    const {setMaxCapacity, maxCapacity, setLocked} = useRoomInfoContext();
+    const queryClient = useQueryClient();
 
+    
     const form = useForm<SettingsSchema>({
         resolver: zodResolver(SettingsFormSchema),
         defaultValues: {
-            lock_unlock: JSON.parse(localStorage.getItem('lock_unlock') ?? 'false'),
+            roomId: roomId,
+            locked: locked,
         },
     });
-
+    
     useEffect(() => {
-        console.log("Form errors:", form.formState.errors);
-      }, [form.formState.errors]);
-
+        console.log("useEffect");
+        console.log(locked);
+        form.reset({
+          roomId: roomId,
+          locked: locked,
+        });
+      }, [roomId, locked, form]);
 
     const mutation = useMutation( async (data: SettingsSchema) => {
         const response = await axios.put(API_URLS.settings, data, {
-            headers: { Authorization: `Bearer ${token}` }
+            headers: { Authorization: `Bearer ${token}` },
         });
         return response.data;
     },
     {
         onSuccess: () => {
             console.log("Success");
-            setMaxCapacity(form.getValues('maxCapacity'));        
+            setMaxCapacity(form.getValues('maxCapacity') ?? maxCapacity);
+            setLocked(form.getValues('locked'));
+            queryClient.invalidateQueries('rooms'); // Invalida a consulta 'rooms'
         },
         onError: () => {
             console.log("Error");
@@ -67,6 +78,9 @@ const SubNavbar: React.FC<SubNavbarProps> = ({status}) => {
     );
 
     function onSubmit(data: SettingsSchema) {
+        if (!data.maxCapacity){
+            data.maxCapacity = maxCapacity;
+        }
         console.log(data);
         mutation.mutate(data);
     }
@@ -75,11 +89,11 @@ const SubNavbar: React.FC<SubNavbarProps> = ({status}) => {
 
     return (
         <div className="flex items-center font-semibold bg-sky-900 p-3 rounded-md text-white space-x-2">
-            <span>Status: {status}</span>
-            <span className={`h-3 w-3 rounded-full animate-glow ${status === 'Online' ? 'bg-green-500 shadow-green' : 'bg-red-500 shadow-red'}`} />
+            <span>Status: {locked ? 'Offline' : 'Online'}</span>
+            <span className={`h-3 w-3 rounded-full animate-glow ${!locked ? 'bg-green-500 shadow-green' : 'bg-red-500 shadow-red'}`} />
             <Dialog>
                 <DialogTrigger>
-                    <Settings />
+                    <Settings/>
                 </DialogTrigger>
                 <DialogContent className='bg-cyan-950 justify-center rounded-xl'>
                     <DialogHeader className=''>
@@ -93,7 +107,7 @@ const SubNavbar: React.FC<SubNavbarProps> = ({status}) => {
                                         render={({ field }) => (
                                             <FormItem>
                                                 <FormLabel className="text-2xl font-semibold">Maximum Occupancy</FormLabel>
-                                                <FormControl className='w-1/3 translate-x-20'>
+                                                <FormControl className='w-1/3 translate-x-24'>
                                                 <Input 
                                                     type="number" 
                                                     {...field} 
@@ -108,16 +122,16 @@ const SubNavbar: React.FC<SubNavbarProps> = ({status}) => {
                                     />
                                     <FormField
                                     control={form.control}
-                                    name="lock_unlock"
+                                    name="locked"
                                     render={({ field }) => (
                                         <FormItem className='grid grid-cols-1'>
-                                            <FormLabel className="font-semibold">Unlocked:</FormLabel>
-                                            <FormControl className="translate-x-24">
+                                            <FormLabel className="font-semibold">Locked:</FormLabel>
+                                            <FormControl className="translate-x-28">
                                             <Switch 
                                             checked={field.value}
                                             onCheckedChange={(value) => {
                                                 field.onChange(value);
-                                                localStorage.setItem('lock_unlock', JSON.stringify(value));
+                                                localStorage.setItem('locked', JSON.stringify(value));
                                             }}                                            
                                             />
                                             </FormControl>

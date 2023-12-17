@@ -28,7 +28,7 @@ const NavBar: React.FC = () => {
         </div>
         {isLogged() ? (
           <>
-            <Link to="/dashboard">
+            <Link to="/dashboard" className='pr-5'>
               <NavBarButton label='Admin DashBoard'/>
             </Link>
             <Button className='rounded-full pl-5' onClick={(event) => {

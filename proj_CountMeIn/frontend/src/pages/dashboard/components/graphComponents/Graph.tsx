@@ -77,7 +77,7 @@ const Graph: React.FC<GraphProps> = ({ value }) => {
           ];
 
           return (
-            <div className="rounded-lg p-5 bg-gray-800" style={{ width: '100%', height: '100%' }}>
+            <div className="rounded-lg p-5 bg-gray-800" style={{ width: '100%', height: '610px' }}>
                 <AreaChart
                     width={1220}
                     height={590}

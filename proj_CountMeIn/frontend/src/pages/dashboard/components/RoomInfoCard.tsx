@@ -17,24 +17,26 @@ import { RoomSettings } from '@/lib/types';
 import Loading from "@/components/Loading";
 
 interface RoomInfoCardProps {
+    roomId: number
 }
 
-const RoomInfoCard: React.FC<RoomInfoCardProps> = () => {
+const RoomInfoCard: React.FC<RoomInfoCardProps> = ({roomId}) => {
 
     const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
     const {token} = useAuthContext();
     const {maxCapacity, setMaxCapacity, currentOccupancy, setCurrentOccupancy, upTime, setUpTime} = useRoomInfoContext();
 
     //apagar isto depois
-    useEffect(() => {
-        setMaxCapacity(20);
-    }, [setMaxCapacity]);
+    // useEffect(() => {
+    //     setMaxCapacity(20);
+    // }, [setMaxCapacity]);
 
-    const {status} = useQuery<RoomSettings>({
-        queryKey: 'roomSettings',
+    const {data, status} = useQuery<RoomSettings>({
+        queryKey: ['roomSettings', roomId],
         queryFn: async () => {
             const { data } = await axios.get(API_URLS.generalInfo, {
-                headers: { Authorization: `Bearer ${token}` }
+                headers: { Authorization: `Bearer ${token}` },
+                params: { room_id: roomId },
             });
             return data;
         },
@@ -48,6 +50,14 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = () => {
         },
         refetchInterval: 5000,
     });
+
+    useEffect(() => {
+        if (status === 'success') {
+          setMaxCapacity(data?.maxCapacity);
+          setCurrentOccupancy(data?.currentOccupancy);
+          setUpTime(data?.upTime);
+        }
+      }, [status, data]);
 
     useEffect(() => {
         const resizeObserver = new ResizeObserver(entries => {
@@ -98,7 +108,7 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = () => {
     const cy = containerSize.height / 2;
     const iR = Math.min(containerSize.width, containerSize.height) * 0.2;
     const oR = Math.min(containerSize.width, containerSize.height) * 0.4;
-    const value = currentOccupancy;
+    const value = data?.currentOccupancy ?? currentOccupancy //se não tiver dados, pega o valor do contexto
 
     const needle = (value: number, data: any[], cx: number, cy: number, iR: number, oR: number, color: string | undefined) => {
         let total = 0;
@@ -134,12 +144,12 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = () => {
                     <CardTitle className="text-2xl font-semibold">General Info:</CardTitle>
                 </CardHeader>
                 <CardContent className="grid gap-y-7 text-center font-semibold text-2xl">
-                    <div>Uptime: {upTime} Hours</div>
-                    <div>Current Occupancy: {currentOccupancy}</div>
-                    <div>Maximum Occupancy: {maxCapacity}</div>
+                    <div>Uptime: {data?.upTime} Hours</div>
+                    <div>Current Occupancy: {data?.currentOccupancy}</div>
+                    <div>Maximum Occupancy: {data?.maxCapacity}</div>
                 </CardContent>
                 <CardFooter className='hidden lg:block'>
-                    <ResponsiveContainer width="100%" height={250} className={"bg-cyan-950 rounded-lg"}>
+                    <ResponsiveContainer width="100%" height={230} className={"bg-cyan-950 rounded-lg"}>
                         <PieChart width={400} height={500} className='translate-y-6'>
                             <Pie
                             dataKey="maxValue"
