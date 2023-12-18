@@ -22,7 +22,8 @@ jobs:
       uses: docker/bake-action@v3
       with:
         push: true
-        files: ./proj_CountMeIn/compose.yml
+        workdir: ./proj_CountMeIn
+        files: ./compose.yml
         set: |
           *.cache-to=type=gha,scope=cached-stage,mode=max
           *.cache-from=type=gha,scope=cached-stage
@@ -34,8 +35,9 @@ jobs:
     - uses: actions/checkout@v3
     - name: Deploy with Docker Compose
       run: |
-        docker-compose -f ./proj_CountMeIn/compose.yml pull
-        docker-compose -f ./proj_CountMeIn/compose.yml up -d --remove-orphans
+        cd ./proj_CountMeIn
+        docker-compose -f ./compose.yml pull
+        docker-compose -f ./compose.yml up -d --remove-orphans
         docker container prune -f
         docker image prune -af
         docker builder prune
