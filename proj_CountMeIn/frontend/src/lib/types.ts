@@ -16,8 +16,9 @@ export const LoginFormSchema = z.object({
   // Settings Form Schema
 
   export const SettingsFormSchema = z.object({
-    maximumOccupancy: z.number(),
-    lock_unlock: z.boolean().optional(),
+    roomId: z.number(),
+    maxCapacity: z.number().optional(),
+    locked: z.boolean(),
   })
 
   export type SettingsSchema = z.infer<typeof SettingsFormSchema>;
@@ -29,19 +30,25 @@ export const LoginFormSchema = z.object({
     name: string;
     email: string;
     password: string;
-    rooms: Room[];
+    rooms: Partial<Room[]>;
 
   }
 
   export interface RoomSettings{
-    id: number;
-    maxCapacity: number; //trocar para capacity
-    currentOccupancy: number; //trocar para room_count
+    roomId: number;
+    maxCapacity: number;
+    currentOccupancy: number; 
     upTime: number;
   }
 
-  export interface Room{
+  export interface Room extends RoomSettings, RoomData {
     id: number;
     name: string;
-    settings: Partial<RoomSettings>;
+    address: string;
+    locked: boolean;
+  }
+
+  export interface RoomData {
+    room_count: number;
+    date: string;
   }

@@ -11,6 +11,12 @@ export interface IRoomInfoContext {
     setCurrentOccupancy: (currentOccupancy: number) => void;
     upTime: number;
     setUpTime: (upTime: number) => void;
+    roomId: number;
+    setRoomId: (roomId: number) => void;
+    locked: boolean;
+    setLocked: (locked: boolean) => void;
+    lastUpdate: string;
+    setLastUpdate: (date: string) => void;
 }
 
 export const RoomInfoContext = React.createContext<IRoomInfoContext>({} as IRoomInfoContext);
@@ -19,11 +25,18 @@ export const RoomInfoProvider: React.FC<RoomInfoContextProps> = ({ children }) =
     const [maxCapacity, setMaxCapacity] = useState<number>(0);
     const [currentOccupancy, setCurrentOccupancy] = useState<number>(0);
     const [upTime, setUpTime] = useState<number>(0);
+    const [roomId, setRoomId] = useState<number>(0);
+    const [locked, setLocked] = useState<boolean>(false);
+    const [lastUpdate, setLastUpdate] = useState<string>("");
 
+    
     //pode dar porcaria, se der é aqui!
     const handleSetMaxCapacity = useCallback((max: number) => setMaxCapacity(max), []);
     const handleSetCurrentOccupancy = useCallback((capacity: number) => setCurrentOccupancy(capacity), []);
     const handleSetUpTime = useCallback((time: number) => setUpTime(time), []);
+    const handleSetRoomId = useCallback((id: number) => setRoomId(id), []);
+    const handleSetLocked = useCallback((lock: boolean) => setLocked(lock), []);
+    const handleSetLastUpdate = useCallback((date: string) => setLastUpdate(date), []);
 
     const value = useMemo(() => ({
         maxCapacity,
@@ -32,7 +45,13 @@ export const RoomInfoProvider: React.FC<RoomInfoContextProps> = ({ children }) =
         setCurrentOccupancy: handleSetCurrentOccupancy,
         upTime,
         setUpTime: handleSetUpTime,
-    }), [maxCapacity, currentOccupancy, upTime, handleSetMaxCapacity, handleSetCurrentOccupancy, handleSetUpTime]);
+        roomId,
+        setRoomId: handleSetRoomId,
+        locked,
+        setLocked: handleSetLocked,
+        lastUpdate,
+        setLastUpdate: handleSetLastUpdate
+    }), [maxCapacity, currentOccupancy, upTime, roomId, locked, lastUpdate,handleSetMaxCapacity, handleSetCurrentOccupancy, handleSetUpTime, handleSetRoomId, handleSetLocked, handleSetLastUpdate]);
 
     return (
         <RoomInfoContext.Provider value={value}>
