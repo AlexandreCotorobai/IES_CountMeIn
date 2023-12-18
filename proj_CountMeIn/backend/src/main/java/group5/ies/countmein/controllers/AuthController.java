@@ -20,7 +20,7 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/")
 public class AuthController {
     private AuthServiceImpl authService;
 

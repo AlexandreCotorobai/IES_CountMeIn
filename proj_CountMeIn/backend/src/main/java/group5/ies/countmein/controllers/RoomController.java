@@ -23,7 +23,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/")
 public class RoomController {
         private RoomServiceImpl roomService;
         private final KafkaTemplate<String, String> kafkaTemplate;
