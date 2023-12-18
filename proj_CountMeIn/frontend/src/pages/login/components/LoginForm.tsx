@@ -53,8 +53,8 @@ export function LoginForm() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email:</FormLabel>
-                  <FormControl>
+                  <FormLabel className="font-semibold dark:text-sky-100 text-cyan-900">Email:</FormLabel>
+                  <FormControl className="border-sky-400">
                     <Input placeholder="example@example.com" {...field} />
                   </FormControl>
                   <FormMessage />
@@ -66,8 +66,8 @@ export function LoginForm() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password:</FormLabel>
-                  <FormControl>
+                  <FormLabel className="font-semibold dark:text-sky-100 text-cyan-900">Password:</FormLabel>
+                  <FormControl className="border-sky-400">
                     <Input type="password" placeholder="Enter your password..."{...field} />
                   </FormControl>
                   <FormMessage />
@@ -77,7 +77,7 @@ export function LoginForm() {
             <div className="text-center">
                 <Button 
                     type="submit" 
-                    className="rounded-full px-10 text-white"
+                    className="rounded-full dark:bg-sky-900 dark:hover:bg-sky-800 bg-cyan-600 hover:bg-cyan-700 px-10 text-white"
                     disabled={loginMutation.isLoading}
                 >
                     {loginMutation.isLoading ? 'Loading...' : 'Submit'}

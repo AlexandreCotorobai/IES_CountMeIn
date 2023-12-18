@@ -55,7 +55,7 @@ export function Component() {
 
 
 return (
-    <div className="min-h-screen-85 flex bg-dark">
+    <div className="min-h-screen-85 flex">
       {/* Sidebar */}
       <div className={`relative pt-4 ${isOpen ? 'w-[200px]' : 'w-[40px]'}`}>
         <Collapsible
@@ -74,14 +74,14 @@ return (
                 </Button>
             </CollapsibleTrigger>
           </div>
-          <div className={`bg-cyan-950 rounded-br-lg ${isOpen ? 'h-auto' : 'h-[40px]'}`}>
+          <div className={`dark:bg-cyan-950 bg-cyan-200 rounded-br-lg ${isOpen ? 'h-auto' : 'h-[40px]'}`}>
           {isOpen && (
             <>
               {rooms?.map((room, index) => {
                 if (room) {
                   return (
                     <div key={room.id} 
-                    className={`px-4 py-2 font-semibold text-center hover:bg-sky-900 cursor-pointer text-xl shadow-sm relative ${roomId === room.id ? 'bg-sky-900' : ''} ${index === rooms.length - 1 ? 'rounded-br-xl' : ''}`} 
+                    className={`px-4 py-2 dark:text-sky-100 text-cyan-900 font-semibold text-center dark:hover:bg-sky-900 hover:bg-cyan-100 cursor-pointer text-xl shadow-sm relative ${roomId === room.id ? 'dark:bg-sky-900 bg-cyan-100' : ''} ${index === rooms.length - 1 ? 'rounded-br-xl' : ''}`} 
                     onClick={() => {
                         setRoomId(room.id);
                         setLocked(room.locked);
@@ -112,15 +112,14 @@ return (
         <div className={`flex-grow p-4 md:flex flex-col ${isOpen ? 'w-[calc(100%-200px)]' : 'w-[calc(100%-40px)]'}`}>
           <div className='border-b border-sky-400'>
             <div className='flex h-16 bg-sky-400 justify-between rounded-t-sm items-center px-4'>
-              {/* Ser alterado depois quando fizer o contexto */}
-              <div className='text-2xl font-bold rounded-md bg-sky-900 p-2'>
+              <div className='text-2xl font-bold rounded-md bg-sky-900 text-sky-100 p-2'>
                   Room Information
               </div>
               <SubNavbar roomId={roomId} locked={locked} />
             </div>
           </div>
           {/* Conteúdo */}
-          <div className="flex-grow border bg-cyan-950 rounded-b-sm p-4">
+          <div className="flex-grow dark:bg-cyan-950 bg-cyan-200 rounded-b-sm p-4">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 pl-3 pt-3">
               {/* Cartões de informação */}
               <div className="order-1">

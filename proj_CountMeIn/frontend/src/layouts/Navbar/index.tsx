@@ -6,14 +6,12 @@ import { NavBarButton } from './components/NavBarButton';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { LogOut } from 'lucide-react';
-import { useTheme } from "@/components/ThemeProvider"
 import { useAuthContext } from "@/contexts/auth"
 
 
 
 const NavBar: React.FC = () => {
   const { isLogged, logout } = useAuthContext()
-  const { theme } = useTheme()
 
   return (
     <nav className="navbar flex justify-between px-9 py-3 z-30 items-center">
@@ -23,7 +21,7 @@ const NavBar: React.FC = () => {
         </Link>
       </div>
       <div className="flex items-center">
-        <div className='p-3'>
+        <div className='p-3 '>
             <ModeToggle />
         </div>
         {isLogged() ? (
@@ -31,11 +29,11 @@ const NavBar: React.FC = () => {
             <Link to="/dashboard" className='pr-5'>
               <NavBarButton label='Admin DashBoard'/>
             </Link>
-            <Button className='rounded-full bg-sky-900 hover:bg-sky-800 pl-5' onClick={(event) => {
+            <Button className='rounded-full dark:bg-sky-900 dark:hover:bg-sky-800 bg-cyan-600 hover:bg-cyan-700 pl-5' onClick={(event) => {
               event.preventDefault();
               logout();
             }}>
-              <LogOut className={`h-[1.4rem] w-[1.4rem] rotate-0 scale-100 transition-all ${theme === 'dark' ? 'text-white' : 'text-primary'}`} />
+              <LogOut className={`h-[1.4rem] w-[1.4rem] rotate-0 scale-100 transition-all text-sky-100`} />
                   <span className="sr-only">Logout</span>
             </Button>
           </>

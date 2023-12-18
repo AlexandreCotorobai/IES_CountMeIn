@@ -19,7 +19,7 @@ import {
   } from "@/components/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {SettingsFormSchema, SettingsSchema} from "@/lib/types"
-import { set, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { useAuthContext } from '@/contexts/auth';
 import axios from 'axios';
@@ -96,9 +96,9 @@ const SubNavbar: React.FC<SubNavbarProps> = ({roomId, locked}) => {
                 <DialogTrigger>
                     <Settings/>
                 </DialogTrigger>
-                <DialogContent className='bg-cyan-950 justify-center rounded-xl'>
+                <DialogContent className='dark:bg-cyan-950 bg-cyan-100 justify-center rounded-xl'>
                     <DialogHeader className=''>
-                        <DialogTitle className='text-center pb-8 text-4xl'>Settings</DialogTitle>
+                        <DialogTitle className='text-center dark:text-sky-100 text-cyan-900 pb-8 text-4xl'>Settings</DialogTitle>
                         <DialogDescription>
                             <Form {...form}>
                                <form onSubmit={form.handleSubmit(onSubmit)} className='w-full text-center space-y-12'>

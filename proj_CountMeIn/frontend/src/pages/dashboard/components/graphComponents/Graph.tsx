@@ -4,7 +4,6 @@ import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
 import { useAuthContext } from "@/contexts/auth";
 import axios from "axios";
 import { useQuery } from "react-query";
-import { useRoomInfoContext } from "@/contexts/roomInformation";
 import { RoomData } from "@/lib/types";
 
 
@@ -56,7 +55,7 @@ const Graph: React.FC<GraphProps> = ({ value, roomId }) => {
         });
 
         return (
-            <div className="rounded-lg p-5 bg-gray-800" style={{ width: '100%', height: '620px' }}>
+            <div className="rounded-lg p-5 dark:bg-gray-800 bg-cyan-600" style={{ width: '100%', height: '620px' }}>
                 <AreaChart
                     width={1220}
                     height={590}

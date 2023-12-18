@@ -1,4 +1,3 @@
-import React from "react";
 import {
     Card,
     CardContent,
@@ -15,15 +14,15 @@ export function LoginCard() {
 
 
     return (
-        <Card className="items-center bg-cyan-950 px-10">
+        <Card className="items-center dark:bg-cyan-950 bg-sky-100 shadow-lg px-10">
             <CardHeader className="space-y-1">
-                <CardTitle className="text-center md:text-3xl sm:text-2xl">Login</CardTitle>
+                <CardTitle className="text-center dark:text-sky-100 text-cyan-900 md:text-3xl sm:text-2xl">Login</CardTitle>
             </CardHeader>
             <CardContent className="grid gap-4">
                 <LoginForm />
             </CardContent>
             <CardFooter>
-                <Button variant="link" className="text-white">Having problems? Contact Us</Button>
+                <Button variant="link" className="dark:text-sky-100 text-cyan-900">Having problems? Contact Us</Button>
             </CardFooter>
         </Card>
     );

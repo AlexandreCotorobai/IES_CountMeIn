@@ -19,10 +19,10 @@ const UpdateCard: React.FC<UpdateCardProps> = () => {
 
 
     return (
-        <Card className="items-center border-sky-900 shadow-xl bg-sky-900 px-10 lg:h-auto h-full">
+        <Card className="items-center dark:border-sky-900 border-sky-100 shadow-xl dark:bg-sky-900 bg-cyan-100 px-10 lg:h-auto h-full">
                 <CardHeader className="space-y-1">
                 </CardHeader>
-                <CardContent className="flex items-center text-center pt-10 lg:p-0 justify-around gap-4">
+                <CardContent className="flex items-center dark:text-sky-100 text-cyan-900 text-center pt-10 lg:p-0 justify-around gap-4">
                 <div className="flex flex-col items-center space-y-2">
                         <CardTitle className="text-2xl font-bold">Last Update</CardTitle>
                         <span className="text-2xl font-bold">{lastUpdated}</span>

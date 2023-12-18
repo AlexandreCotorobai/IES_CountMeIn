@@ -14,7 +14,6 @@ import axios from 'axios';
 import { useAuthContext } from '@/contexts/auth';
 import { useRoomInfoContext } from '@/contexts/roomInformation';
 import { RoomSettings } from '@/lib/types';
-import Loading from "@/components/Loading";
 
 interface RoomInfoCardProps {
     roomId: number
@@ -25,11 +24,6 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = ({roomId}) => {
     const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
     const {token} = useAuthContext();
     const {maxCapacity, setMaxCapacity, currentOccupancy, setCurrentOccupancy, setUpTime, setLastUpdate} = useRoomInfoContext();
-
-    //apagar isto depois
-    // useEffect(() => {
-    //     setMaxCapacity(20);
-    // }, [setMaxCapacity]);
 
     const {data, status} = useQuery<RoomSettings>({
         queryKey: ['roomSettings', roomId],
@@ -145,17 +139,17 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = ({roomId}) => {
     
     return (
         // <Loading status={status}>
-            <Card className="items-center border-transparent shadow-xl space-y-2 bg-sky-900 px-10">
+            <Card className="items-center border-transparent shadow-xl space-y-2 dark:bg-sky-900 bg-cyan-100 px-10">
                 <CardHeader className="space-y-2 lg:text-start text-center">
-                    <CardTitle className="text-3xl font-semibold">General Info:</CardTitle>
+                    <CardTitle className="text-3xl font-semibold dark:text-sky-100 text-cyan-900">General Info:</CardTitle>
                 </CardHeader>
-                <CardContent className="grid gap-y-7 text-center font-semibold text-2xl">
+                <CardContent className="grid gap-y-7 dark:text-sky-100 text-cyan-900 text-center font-semibold text-2xl">
                     <div>Uptime: {data?.upTime} Hours</div>
                     <div>Current Occupancy: {data?.currentOccupancy}</div>
                     <div>Maximum Occupancy: {data?.maxCapacity}</div>
                 </CardContent>
                 <CardFooter className='hidden lg:block'>
-                    <ResponsiveContainer width="100%" height={230} className={"bg-cyan-950 rounded-lg"}>
+                    <ResponsiveContainer width="100%" height={230} className={"dark:bg-cyan-950 bg-cyan-300 rounded-lg"}>
                         <PieChart width={400} height={500} className='translate-y-6'>
                             <Pie
                             dataKey="maxValue"
