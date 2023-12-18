@@ -1,11 +1,13 @@
 import argparse
 import random
 import time
+from datetime import datetime
 from kafka_client import KafkaClient
 
 
-def generate_message(user_id, room_id, room_coords):
-    return {"user_id": user_id, "room_id": room_id, "room_count": len(room_coords)}
+def generate_message(room_id, room_coords, date = str(datetime.now().isoformat())):
+    print(date)
+    return {"room_id": room_id, "room_count": len(room_coords), "date": date}
 
 
 def generate_room_coords():
@@ -32,7 +34,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--kafka-topic",
         type=str,
-        default="test",
+        default="events",
         help="Topic to publish to",
     )
     parser.add_argument(
@@ -60,7 +62,7 @@ if __name__ == "__main__":
         producer = KafkaClient(args.kafka_url, args.kafka_topic)
         while True:
             room_coords = generate_room_coords()
-            message = generate_message(args.user_id, args.room_id, room_coords)
+            message = generate_message(args.room_id, room_coords)
             producer.publish(data=message)
             time.sleep(args.interval)
 

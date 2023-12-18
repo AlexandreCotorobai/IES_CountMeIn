@@ -28,10 +28,10 @@ consumer = Consumer({
 })
 
 client = MongoClient('mongodb://db_mongo:27017/')
-db = client['events']
-collection = db['data']
+db = client['countmein']
+collection = db['events']
 
-consumer.subscribe(['countmein'])
+consumer.subscribe(['events'])
 
 while True:
     msg = consumer.poll(1.0)

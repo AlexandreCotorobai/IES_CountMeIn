@@ -61,13 +61,6 @@ public class RoomController {
                                         .body("Room not found");
                 }
 
-                // Send a message to Kafka topic "roomupdates"
-                if (response.getCurrentOccupancy() == response.getMaxCapacity()) {
-                        String message = String.format("{\"roomId\": %d, \"maxCount\": %d, \"locked\": %b}",
-                                        room_id, response.getMaxCapacity(), true);
-                        kafkaTemplate.send("roomupdates", message);
-                }
-
                 return ResponseEntity.status(HttpStatus.OK)
                                 .contentType(APPLICATION_JSON)
                                 .body(response);
