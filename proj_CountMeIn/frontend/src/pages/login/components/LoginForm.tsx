@@ -74,6 +74,7 @@ export function LoginForm() {
                 </FormItem>
               )}
             />
+            {error && <div className="text-red-500 text-center text-sm">{error}</div>}
             <div className="text-center">
                 <Button 
                     type="submit" 
@@ -83,7 +84,6 @@ export function LoginForm() {
                     {loginMutation.isLoading ? 'Loading...' : 'Submit'}
                 </Button>
             </div>
-            {error && <div className="text-red-600">{error}</div>}
           </form>
         </Form>
       )

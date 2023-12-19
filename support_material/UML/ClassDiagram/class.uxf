@@ -1,0 +1,21 @@
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>90</x><y>250</y><w>160</w><h>120</h></coordinates><panel_attributes>Admin
+--
+--id:long
+--name:String
+--email:String
+--password:String
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>520</x><y>250</y><w>160</w><h>120</h></coordinates><panel_attributes>Room
+--
+--id:long
+--name:String
+--address:String
+--capacity:int
+--locked:boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>310</x><y>420</y><w>160</w><h>110</h></coordinates><panel_attributes>Event
+--
+--id:long
+--room_id:int
+--room_count:int
+--date:String</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>240</x><y>290</y><w>300</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=1..n
+manages</panel_attributes><additional_attributes>10;20;280;20</additional_attributes></element></diagram>
