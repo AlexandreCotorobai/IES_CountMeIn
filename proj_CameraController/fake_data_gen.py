@@ -5,14 +5,26 @@ from datetime import datetime
 from kafka_client import KafkaClient
 
 
-def generate_message(room_id, room_coords, date = str(datetime.now().isoformat())):
-    print(date)
-    return {"room_id": room_id, "room_count": len(room_coords), "date": date}
+last_points_gen= 40
+min_points = 30
+max_points = 60
+
+def generate_message(room_id, room_coords ):
+    return {"room_id": room_id, "room_count": len(room_coords), "date": str(datetime.now().isoformat())}
 
 
 def generate_room_coords():
-    # choose random number between 1 and 15
-    n_points = random.randint(1, 15)
+    global last_points_gen
+    global min_points
+    global max_points
+    
+    n_points = random.randint(last_points_gen-3, last_points_gen+3)
+    if n_points < min_points:
+        n_points = min_points
+    elif n_points > max_points:
+        n_points = max_points
+
+    last_points_gen = n_points
     # generate n_points random coordinates
     room_coords = []
     for _ in range(n_points):
