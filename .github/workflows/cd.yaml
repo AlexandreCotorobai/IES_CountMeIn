@@ -23,7 +23,7 @@ jobs:
       with:
         push: true
         workdir: ./proj_CountMeIn
-        files: ./compose.yml
+        files: ./compose.prod.yml
         set: |
           *.cache-to=type=gha,scope=cached-stage,mode=max
           *.cache-from=type=gha,scope=cached-stage
@@ -36,8 +36,8 @@ jobs:
     - name: Deploy with Docker Compose
       run: |
         cd ./proj_CountMeIn
-        docker compose -f ./compose.yml pull
-        docker compose -f ./compose.yml up -d --remove-orphans
+        docker compose -f ./compose.prod.yml pull
+        docker compose -f ./compose.prod.yml up -d --remove-orphans
         docker container prune -f
         docker image prune -af
         docker builder prune
