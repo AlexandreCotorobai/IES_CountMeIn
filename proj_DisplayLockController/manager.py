@@ -6,7 +6,7 @@ from aiokafka import AIOKafkaConsumer
 import drivers
 from time import sleep
 from datetime import datetime
-
+import json
 class Manager:
     def __init__(self, url, topic1, topic2, id):
         self.display = Display()
@@ -25,7 +25,9 @@ class Manager:
         self.display.display_message("Hello World!", "Good Morning!")
         while True:
             async for msg in self.consumer:
-                res = eval(msg.value)
+                print(msg.value)
+                res = json.loads(msg.value)
+                print(res)
                 if msg.topic == "roomupdates":
                     if res["roomId"] == self.id:
                         self.max_number = res["maxCount"]
