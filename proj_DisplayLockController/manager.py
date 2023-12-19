@@ -35,7 +35,9 @@ class Manager:
                     if res["room_id"] == self.id:
                         number_count = res["room_count"]
                         locked = number_count >= self.max_number
-                        locked_str = "Locked" if locked else "Unlocked"
+                        locked_str = "Locked"
+                        if not self.forced_lock:
+                            locked_str = "Locked" if locked else "Unlocked"
                         self.display.display_message(f"{number_count}/{self.max_number}".center(16), locked_str.center(16))
 
     
