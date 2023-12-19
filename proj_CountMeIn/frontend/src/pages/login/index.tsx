@@ -4,6 +4,7 @@ import NormalBlueLine from "@/assets/Background/normalBlueLine.svg";
 import { LoginCard } from "./components/LoginCard";
 
 export function Component() {
+    console.log("Credentials: admin@example.com password: Admin_example1");
     return (
         <div className="relative flex flex-col min-h-screen-90 justify-around pb-24">
             <div className="flex flex-col relative z-10 items-center">

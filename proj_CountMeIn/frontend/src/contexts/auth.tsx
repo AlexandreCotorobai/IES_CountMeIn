@@ -54,7 +54,10 @@ export const AuthProvider: React.FC<AuthProps> = ({ children }: React.PropsWithC
             localStorage.setItem('token', data.token);
         },
         onError: (error: any) => {
-            setError(error.response?.data?.message || 'Login failed. Please try again.');
+            setError('Login failed. Please try again.');
+            if (error.response?.status === 403) {
+                setError(() => 'Invalid credentials.');
+            }
         },
     });
     
@@ -101,7 +104,7 @@ export const AuthProvider: React.FC<AuthProps> = ({ children }: React.PropsWithC
         logout,
         loginMutation,
         error,
-    }), [user, token]);
+    }), [user, token, error, loginMutation]);
 
     return (
         <AuthContext.Provider value={authCtx}>
