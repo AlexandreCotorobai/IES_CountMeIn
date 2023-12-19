@@ -3,6 +3,7 @@ from confluent_kafka.admin import AdminClient, NewTopic
 from pymongo import MongoClient
 import json
 import time
+from datetime import datetime
 
 # Loop until Kafka is ready
 while True:
@@ -46,5 +47,7 @@ while True:
     # print(msg_value)
     if msg_value:  # Check if the message value is not empty
         data = json.loads(msg_value)
+        # transform date to datetime
+        data['date'] = datetime.strptime(data['date'], '%Y-%m-%dT%H:%M:%S.%f')
         collection.insert_one(data)
         print(f"saved {data} to db")

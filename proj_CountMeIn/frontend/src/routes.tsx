@@ -34,7 +34,7 @@ const routes = [
                         <CustomRoute page={DashboardComponent} redirectTo='/dashboard' />
                     </Suspense>
                 )
-            }
+            },
         ],
     },
     // ... outras rotas

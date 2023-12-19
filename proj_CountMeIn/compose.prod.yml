@@ -50,11 +50,11 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://deti-ies-20.ua.pt:29092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-    
+
   kafdrop:
     image: obsidiandynamics/kafdrop
     ports:
@@ -65,6 +65,7 @@ services:
       - kafka
       
   kafka_2_mongo_service:
+    image: leikrad/ies_kafka_2_mongo_service:latest
     build:
       context: services
     depends_on:
@@ -72,13 +73,12 @@ services:
         condition: service_healthy
       
   web-app:
+    image: leikrad/ies_web_app:latest
     build:
       context: frontend
+      dockerfile: Dockerfile.prod
     ports:
       - "3000:3000"
-    volumes:
-      - node_modules:/frontend/node_modules
-      - ./frontend:/frontend
     restart: unless-stopped
 
   api:
@@ -87,6 +87,8 @@ services:
       - db_mongo
     build: 
       context: backend
+      dockerfile: Dockerfile.prod
+    image: leikrad/ies_api:latest
     restart:
       unless-stopped
     ports:
@@ -103,6 +105,7 @@ services:
         "logging.level.org.springframework" : "DEBUG",
         "spring.kafka.bootstrap-servers" : "kafka:9092"
         }'
+    
 
   proxy:
     image: nginx:latest
@@ -116,6 +119,7 @@ services:
     restart: unless-stopped
   
   init_psql_db:
+    image: leikrad/ies_init_psql_db:latest
     depends_on:
       - db_pg
     build:
@@ -125,6 +129,4 @@ volumes:
   pg_data:
     driver: local
   mongo_data:
-    driver: local
-  node_modules:
     driver: local

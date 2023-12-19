@@ -10,7 +10,7 @@ export interface AuthProps {
 
 export interface IAuthContext {
     user: User | null;
-    token: string,
+    token: string | null,
     setToken: (token: string | null) => void;
     login: (user: User, token: string) => Promise<void>;
     isLogged: () => boolean;
@@ -23,7 +23,7 @@ export const AuthContext = React.createContext<IAuthContext>({} as IAuthContext)
 
 export const AuthProvider: React.FC<AuthProps> = ({ children }: React.PropsWithChildren<{}>) => {
     const [user, setUser] = useState<User | null>(null);
-    const [token, setToken] = useState<string | null>("");
+    const [token, setToken] = useState<string | null >(null);
     const queryClient = new QueryClient();
 
     const login = async (user: User, token: string) => {
@@ -37,7 +37,7 @@ export const AuthProvider: React.FC<AuthProps> = ({ children }: React.PropsWithC
 
     const logout = async () => {
         setUser(null);
-        setToken("");
+        setToken(null);
         localStorage.removeItem('token');
         queryClient.clear();
     }
@@ -57,6 +57,13 @@ export const AuthProvider: React.FC<AuthProps> = ({ children }: React.PropsWithC
             setError(error.response?.data?.message || 'Login failed. Please try again.');
         },
     });
+    
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            setToken(token);
+        }
+    }, []);
 
     useQuery(
         'userData',
@@ -69,22 +76,21 @@ export const AuthProvider: React.FC<AuthProps> = ({ children }: React.PropsWithC
         {
             enabled: !!token,
             onSuccess: (data) => {
-                if (token) {
+                if (token){
                     login(data, token);
                 }
             },
             onError: (error: any) => {
-                setError(error.response?.data?.message || 'Failed to fetch user data.');
+                if (error.response?.status === 403) {
+                    logout();
+                    console.log('logout user');
+                } else {
+                    setError(error.response?.data?.message || 'Failed to fetch user data.');
+                }
             },
         }
     );
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            setToken(token);
-        }
-    }, []);
 
     const authCtx = useMemo<IAuthContext>((): IAuthContext => ({
         user,

@@ -16,25 +16,27 @@ import { useRoomInfoContext } from '@/contexts/roomInformation';
 import { RoomSettings } from '@/lib/types';
 
 interface RoomInfoCardProps {
+    roomId: number
 }
 
-const RoomInfoCard: React.FC<RoomInfoCardProps> = () => {
+const RoomInfoCard: React.FC<RoomInfoCardProps> = ({roomId}) => {
 
     const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
     const {token} = useAuthContext();
-    const {maxCapacity, setMaxCapacity, currentOccupancy, setCurrentOccupancy, upTime, setUpTime} = useRoomInfoContext();
+    const {maxCapacity, setMaxCapacity, currentOccupancy, setCurrentOccupancy, setUpTime, setLastUpdate} = useRoomInfoContext();
 
-    //apagar isto depois
-    useEffect(() => {
-        setMaxCapacity(20);
-    }, [setMaxCapacity]);
-
-    useQuery<RoomSettings>({
-        queryKey: 'roomSettings',
+    const {data, status} = useQuery<RoomSettings>({
+        queryKey: ['roomSettings', roomId],
         queryFn: async () => {
             const { data } = await axios.get(API_URLS.generalInfo, {
-                headers: { Authorization: `Bearer ${token}` }
+                headers: { Authorization: `Bearer ${token}` },
+                params: { room_id: roomId },
             });
+            if (data.currentOccupancy > data.maxCapacity) {
+                console.log(`Current occupancy: ${data.currentOccupancy} > max capacity: ${data.maxCapacity}`);
+            }
+
+            setLastUpdate(new Date().toISOString());
             return data;
         },
         onSuccess: (data) => {
@@ -47,6 +49,15 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = () => {
         },
         refetchInterval: 5000,
     });
+
+    useEffect(() => {
+        if (status === 'success') {
+          setMaxCapacity(data?.maxCapacity);
+          setCurrentOccupancy(data?.currentOccupancy);
+          setUpTime(data?.upTime);
+          setLastUpdate(new Date().toISOString());
+        }
+      }, [status, data]);
 
     useEffect(() => {
         const resizeObserver = new ResizeObserver(entries => {
@@ -74,19 +85,19 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = () => {
     const data2 = [
         {
             id: 'A',
-            name: 'A',
+            name: 'Green Area',
             maxValue: maxCapacity*0.6,
             color: '#82ca9d',
         },
         {
             id: 'B',
-            name: 'B',
+            name: 'Yellow Area',
             maxValue: maxCapacity*0.2,
             color: '#ffc658',
         },
         {
             id: 'C',
-            name: 'C',
+            name: 'Red Area',
             maxValue: maxCapacity*0.1,
             color: '#ff0000',
         },
@@ -97,7 +108,7 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = () => {
     const cy = containerSize.height / 2;
     const iR = Math.min(containerSize.width, containerSize.height) * 0.2;
     const oR = Math.min(containerSize.width, containerSize.height) * 0.4;
-    const value = currentOccupancy;
+    const value = data?.currentOccupancy ?? currentOccupancy //se não tiver dados, pega o valor do contexto
 
     const needle = (value: number, data: any[], cx: number, cy: number, iR: number, oR: number, color: string | undefined) => {
         let total = 0;
@@ -121,45 +132,47 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = () => {
         return [
           <circle key="circle" cx={x0} cy={y0} r={r} fill={color} stroke="none" />,
           <path key="path" d={`M${xba} ${yba}L${xbb} ${ybb} L${xp} ${yp} L${xba} ${yba}`} stroke="#none" fill={color} strokeWidth={2} />,
-          <text key="text" x={cx} y={cy + 40} fill="#ffffff" fontSize={"20"} textAnchor="middle">{`${currentOccupancy}/${maxCapacity}`}</text>
+          <text key="text" x={cx + 5} y={cy + 40} fill="#ffffff" fontSize={"20"} textAnchor="middle">{`${currentOccupancy}/${maxCapacity}`}</text>
         ];
       };
 
     
     return (
-        <Card className="items-center space-y-5 bg-sky-900 px-10">
-            <CardHeader className="space-y-2 lg:text-start text-center">
-                <CardTitle className="text-2xl font-semibold">General Info:</CardTitle>
-            </CardHeader>
-            <CardContent className="grid gap-y-7 text-center font-semibold text-2xl">
-                <div>Uptime: {upTime} Hours</div>
-                <div>Current Occupancy: {currentOccupancy}</div>
-                <div>Maximum Occupancy: {maxCapacity}</div>
-            </CardContent>
-            <CardFooter className='hidden lg:block'>
-                <ResponsiveContainer width="100%" height={250} className={"bg-cyan-950 rounded-lg"}>
-                    <PieChart width={400} height={500} className='translate-y-6'>
-                        <Pie
-                        dataKey="maxValue"
-                        startAngle={180}
-                        endAngle={0}
-                        data={data2}
-                        cx={cx}
-                        cy={cy}
-                        innerRadius={iR}
-                        outerRadius={oR}
-                        fill="#8884d8"
-                        stroke="none"
-                        >
-                        {data2.map((entry) => (
-                            <Cell key={entry.id} fill={entry.color} />
-                        ))}
-                        </Pie>
-                        {needle(value, data2, cx, cy, iR, oR, '#FFFAFA')}
-                    </PieChart>
-                </ResponsiveContainer>
-            </CardFooter>
-        </Card>
+        // <Loading status={status}>
+            <Card className="items-center border-transparent shadow-xl space-y-2 dark:bg-sky-900 bg-cyan-100 px-10">
+                <CardHeader className="space-y-2 lg:text-start text-center">
+                    <CardTitle className="text-3xl font-semibold dark:text-sky-100 text-cyan-900">General Info:</CardTitle>
+                </CardHeader>
+                <CardContent className="grid gap-y-7 dark:text-sky-100 text-cyan-900 text-center font-semibold text-2xl">
+                    <div>Uptime: {data?.upTime} Hours</div>
+                    <div>Current Occupancy: {data?.currentOccupancy}</div>
+                    <div>Maximum Occupancy: {data?.maxCapacity}</div>
+                </CardContent>
+                <CardFooter className='hidden lg:block'>
+                    <ResponsiveContainer width="100%" height={230} className={"dark:bg-cyan-950 bg-cyan-300 rounded-lg"}>
+                        <PieChart width={400} height={500} className='translate-y-6'>
+                            <Pie
+                            dataKey="maxValue"
+                            startAngle={180}
+                            endAngle={0}
+                            data={data2}
+                            cx={cx}
+                            cy={cy}
+                            innerRadius={iR}
+                            outerRadius={oR}
+                            fill="#8884d8"
+                            stroke="none"
+                            >
+                            {data2.map((entry) => (
+                                <Cell key={entry.id} fill={entry.color} />
+                            ))}
+                            </Pie>
+                            {needle(value, data2, cx, cy, iR, oR, '#FFFAFA')}
+                        </PieChart>
+                    </ResponsiveContainer>
+                </CardFooter>
+            </Card>
+        // </Loading>
     );
 };
 
