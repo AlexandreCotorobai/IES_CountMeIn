@@ -1,70 +1,82 @@
-<diagram program="umletino" version="15.1"><zoom_level>8</zoom_level><element><id>UMLGeneric</id><coordinates><x>136</x><y>88</y><w>136</w><h>72</h></coordinates><panel_attributes>symbol=component
-Card Sensor</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>336</x><y>88</y><w>136</w><h>72</h></coordinates><panel_attributes>symbol=component
-Door</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>288</x><y>208</y><w>248</w><h>120</h></coordinates><panel_attributes>symbol=component
+<diagram program="umletino" version="15.1"><zoom_level>8</zoom_level><element><id>UMLGeneric</id><coordinates><x>144</x><y>128</y><w>136</w><h>72</h></coordinates><panel_attributes>symbol=component
+Card Sensor</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>344</x><y>128</y><w>136</w><h>72</h></coordinates><panel_attributes>symbol=component
+Door</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>296</x><y>248</y><w>248</w><h>120</h></coordinates><panel_attributes>symbol=component
 Processing Unit
 (Raspberry Pi)
-fontsize=13</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>192</x><y>136</y><w>176</w><h>104</h></coordinates><panel_attributes>lt=[]-[USB Micro-B]
-Card Data</panel_attributes><additional_attributes>10;10;10;110;170;110</additional_attributes></element><element><id>Relation</id><coordinates><x>448</x><y>136</y><w>168</w><h>136</h></coordinates><panel_attributes>lt=[]-[Micro USB-B]
+fontsize=13</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>200</x><y>176</y><w>176</w><h>104</h></coordinates><panel_attributes>lt=[]-[USB Micro-B]
+Card Data</panel_attributes><additional_attributes>10;10;10;110;170;110</additional_attributes></element><element><id>Relation</id><coordinates><x>456</x><y>176</y><w>168</w><h>136</h></coordinates><panel_attributes>lt=[]-[Micro USB-B]
 m2=lock/unlock instruction
-fontsize=13</panel_attributes><additional_attributes>10;10;50;10;50;150</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>536</x><y>88</y><w>136</w><h>64</h></coordinates><panel_attributes>symbol=component
-Display</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>488</x><y>128</y><w>248</w><h>192</h></coordinates><panel_attributes>lt=[]-[]
-Number of people</panel_attributes><additional_attributes>190;10;190;220;10;220</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>88</x><y>408</y><w>136</w><h>72</h></coordinates><panel_attributes>symbol=component
-Camera</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>280</x><y>376</y><w>200</w><h>104</h></coordinates><panel_attributes>symbol=component
+fontsize=13</panel_attributes><additional_attributes>10;10;50;10;50;150</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>544</x><y>128</y><w>136</w><h>64</h></coordinates><panel_attributes>symbol=component
+Display</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>496</x><y>168</y><w>248</w><h>192</h></coordinates><panel_attributes>lt=[]-[]
+Number of people</panel_attributes><additional_attributes>190;10;190;220;10;220</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>96</x><y>448</y><w>136</w><h>72</h></coordinates><panel_attributes>symbol=component
+Camera</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>288</x><y>416</y><w>200</w><h>104</h></coordinates><panel_attributes>symbol=component
 Processing Unit
-(Raspberry Pi)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>176</x><y>448</y><w>184</w><h>32</h></coordinates><panel_attributes>lt=[USB]-[USB Micro-B]
-Images</panel_attributes><additional_attributes>20;20;180;20</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>64</x><y>40</y><w>632</w><h>456</h></coordinates><panel_attributes>Hardware Components
---</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>744</x><y>304</y><w>160</w><h>96</h></coordinates><panel_attributes>symbol=component
-Message Broker</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>360</x><y>320</y><w>224</w><h>48</h></coordinates><panel_attributes>lt=)-[kafka-python]</panel_attributes><additional_attributes>250;30;50;30;50;10</additional_attributes></element><element><id>Relation</id><coordinates><x>568</x><y>328</y><w>232</w><h>40</h></coordinates><panel_attributes>lt=()-[Kafka]
+(Raspberry Pi)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>184</x><y>488</y><w>184</w><h>32</h></coordinates><panel_attributes>lt=[USB]-[USB Micro-B]
+Images</panel_attributes><additional_attributes>20;20;180;20</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>72</x><y>80</y><w>632</w><h>456</h></coordinates><panel_attributes>Hardware Components
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>752</x><y>344</y><w>160</w><h>96</h></coordinates><panel_attributes>symbol=component
+Message Broker</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>368</x><y>360</y><w>224</w><h>48</h></coordinates><panel_attributes>lt=)-[kafka-python]</panel_attributes><additional_attributes>250;30;50;30;50;10</additional_attributes></element><element><id>Relation</id><coordinates><x>576</x><y>368</y><w>232</w><h>40</h></coordinates><panel_attributes>lt=()-[Kafka]
 m1=JSON Data 
-&lt;&lt;WIFI connetion&gt;&gt;</panel_attributes><additional_attributes>10;20;260;20</additional_attributes></element><element><id>Relation</id><coordinates><x>600</x><y>368</y><w>200</w><h>88</h></coordinates><panel_attributes>lt=)-[Kafka]
+&lt;&lt;WIFI connetion&gt;&gt;</panel_attributes><additional_attributes>10;20;260;20</additional_attributes></element><element><id>Relation</id><coordinates><x>608</x><y>408</y><w>200</w><h>88</h></coordinates><panel_attributes>lt=)-[Kafka]
 &lt;&lt;WIFI connetion&gt;&gt;
-JSON Data</panel_attributes><additional_attributes>20;80;220;80;220;10</additional_attributes></element><element><id>Relation</id><coordinates><x>848</x><y>328</y><w>144</w><h>40</h></coordinates><panel_attributes>lt=)-[Kafka]</panel_attributes><additional_attributes>150;20;30;20</additional_attributes></element><element><id>Relation</id><coordinates><x>848</x><y>368</y><w>200</w><h>32</h></coordinates><panel_attributes>lt=()-[Kafka]
-m1=JSON Data</panel_attributes><additional_attributes>230;10;30;10</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>936</x><y>424</y><w>216</w><h>144</h></coordinates><panel_attributes>symbol=component
+JSON Event Data</panel_attributes><additional_attributes>20;80;220;80;220;10</additional_attributes></element><element><id>Relation</id><coordinates><x>856</x><y>368</y><w>144</w><h>40</h></coordinates><panel_attributes>lt=)-[Kafka]</panel_attributes><additional_attributes>150;20;30;20</additional_attributes></element><element><id>Relation</id><coordinates><x>856</x><y>408</y><w>200</w><h>32</h></coordinates><panel_attributes>lt=()-[Kafka]
+m1=JSON Event Data</panel_attributes><additional_attributes>230;10;30;10</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>944</x><y>464</y><w>216</w><h>144</h></coordinates><panel_attributes>symbol=component
 fontsize=17
 
 
 
-Data Preservation</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1032</x><y>360</y><w>96</w><h>80</h></coordinates><panel_attributes>lt=)-[Kafka Client]</panel_attributes><additional_attributes>20;20;70;20;70;80</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>504</x><y>536</y><w>192</w><h>88</h></coordinates><panel_attributes>symbol=component
+Data Preservation</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1040</x><y>400</y><w>96</w><h>80</h></coordinates><panel_attributes>lt=)-[Kafka Client]</panel_attributes><additional_attributes>20;20;70;20;70;80</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>512</x><y>568</y><w>192</w><h>128</h></coordinates><panel_attributes>symbol=component
 
 Room's
 Data
 Database
-fontsize=14</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>728</x><y>616</y><w>160</w><h>96</h></coordinates><panel_attributes>symbol=component
+fontsize=14</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>736</x><y>696</y><w>160</w><h>96</h></coordinates><panel_attributes>symbol=component
 
 UserStorage 
-Database</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>1160</x><y>264</y><w>272</w><h>160</h></coordinates><panel_attributes>symbol=component
+Database</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>1168</x><y>304</y><w>424</w><h>160</h></coordinates><panel_attributes>symbol=component
 CountMeIn API (REST)
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>976</x><y>336</y><w>248</w><h>24</h></coordinates><panel_attributes>lt=()-[Kafka Client]</panel_attributes><additional_attributes>10;10;260;10</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>792</x><y>80</y><w>136</w><h>64</h></coordinates><panel_attributes>symbol=component
-Client Website</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>920</x><y>216</y><w>528</w><h>448</h></coordinates><panel_attributes>Server Side
---</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>520</x><y>32</y><w>432</w><h>152</h></coordinates><panel_attributes>Client Side
---</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1192</x><y>312</y><w>88</w><h>72</h></coordinates><panel_attributes>
-Room 
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>984</x><y>376</y><w>248</w><h>24</h></coordinates><panel_attributes>lt=()-[Kafka Client]</panel_attributes><additional_attributes>10;10;260;10</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>800</x><y>104</y><w>136</w><h>80</h></coordinates><panel_attributes>symbol=component
+Client Website</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>928</x><y>256</y><w>680</w><h>368</h></coordinates><panel_attributes>Server Side
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>528</x><y>72</y><w>432</w><h>152</h></coordinates><panel_attributes>Client Side
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1200</x><y>352</y><w>168</w><h>72</h></coordinates><panel_attributes>
+Room
 Data
 Contoller
-fontsize=14</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1320</x><y>312</y><w>80</w><h>72</h></coordinates><panel_attributes>
-User
-Data
+fontsize=14</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1504</x><y>352</y><w>80</w><h>72</h></coordinates><panel_attributes>
+Auth
 Controller
-fontsize=14</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>360</x><y>416</y><w>96</w><h>56</h></coordinates><panel_attributes>Image 
+fontsize=14</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>368</x><y>456</y><w>96</w><h>56</h></coordinates><panel_attributes>Image 
 processing
 (people
 counting)
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>288</x><y>280</y><w>160</w><h>48</h></coordinates><panel_attributes>Lock or unlock message /
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>296</x><y>320</y><w>160</w><h>48</h></coordinates><panel_attributes>Lock or unlock message /
 People count received 
 message
-fontsize=13</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>328</x><y>424</y><w>48</w><h>48</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>40;10;10;10;10;40</additional_attributes></element><element><id>Relation</id><coordinates><x>432</x><y>424</y><w>184</w><h>24</h></coordinates><panel_attributes>lt=()-[kafka-python]</panel_attributes><additional_attributes>210;10;50;10</additional_attributes></element><element><id>Relation</id><coordinates><x>440</x><y>296</y><w>64</w><h>24</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>60;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>320</x><y>224</y><w>24</w><h>72</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;70;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>416</x><y>240</y><w>56</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>50;10;10;10;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>872</x><y>376</y><w>512</w><h>296</h></coordinates><panel_attributes>lt=[JDBC]-[SQL]
+fontsize=13</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>336</x><y>464</y><w>48</w><h>48</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>40;10;10;10;10;40</additional_attributes></element><element><id>Relation</id><coordinates><x>440</x><y>464</y><w>184</w><h>24</h></coordinates><panel_attributes>lt=()-[kafka-python]</panel_attributes><additional_attributes>210;10;50;10</additional_attributes></element><element><id>Relation</id><coordinates><x>448</x><y>336</y><w>64</w><h>24</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>60;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>328</x><y>264</y><w>24</w><h>72</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;70;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>424</x><y>280</y><w>56</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>50;10;10;10;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>880</x><y>416</y><w>712</w><h>336</h></coordinates><panel_attributes>lt=[Postgres Driver]-[SQL]
+Data
+&lt;&lt;Admin information&gt;&gt;
+fontsize=13</panel_attributes><additional_attributes>830;10;830;390;20;390</additional_attributes></element><element><id>Relation</id><coordinates><x>672</x><y>416</y><w>640</w><h>248</h></coordinates><panel_attributes>lt=[MongoDB Java Driver]-[MongoDB]
+JSON Event Data
+&lt;&lt;Room Data Information&gt;&gt;
+fontsize=13</panel_attributes><additional_attributes>720;10;720;280;40;280</additional_attributes></element><element><id>Relation</id><coordinates><x>672</x><y>592</y><w>368</w><h>40</h></coordinates><panel_attributes>lt=[MongoClient]-[MongoDB]
+JSON Event Data
+&lt;&lt;Room Data Information&gt;&gt;
+fontsize=13</panel_attributes><additional_attributes>400;20;40;20</additional_attributes></element><element><id>Relation</id><coordinates><x>928</x><y>160</y><w>344</w><h>208</h></coordinates><panel_attributes>lt=[REST]-[]
+JSON Data
+&lt;&lt;Room Data Information&gt;&gt;
+fontsize=13</panel_attributes><additional_attributes>400;240;400;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>872</x><y>176</y><w>696</w><h>192</h></coordinates><panel_attributes>lt=[REST]-[]
 JSON Data
 &lt;&lt;Admin information&gt;&gt;
-fontsize=13</panel_attributes><additional_attributes>610;10;610;340;20;340</additional_attributes></element><element><id>Relation</id><coordinates><x>664</x><y>376</y><w>640</w><h>240</h></coordinates><panel_attributes>lt=[MongoDB Java Driver]-[MongoDB]
-JSON Data
+fontsize=13</panel_attributes><additional_attributes>840;220;840;30;10;30;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1392</x><y>352</y><w>80</w><h>72</h></coordinates><panel_attributes>
+Event
+Data
+Controller
+fontsize=14</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>880</x><y>416</y><w>504</w><h>384</h></coordinates><panel_attributes>lt=[Postgres Driver]-[SQL]
+Data
+&lt;&lt;Rooms information&gt;&gt;
+fontsize=13</panel_attributes><additional_attributes>570;10;570;450;20;450</additional_attributes></element><element><id>Relation</id><coordinates><x>672</x><y>416</y><w>824</w><h>280</h></coordinates><panel_attributes>lt=[MongoDB Java Driver]-[MongoDB]
+JSON Event Data
 &lt;&lt;Room Data Information&gt;&gt;
-fontsize=13</panel_attributes><additional_attributes>720;10;720;270;40;270</additional_attributes></element><element><id>Relation</id><coordinates><x>664</x><y>552</y><w>384</w><h>40</h></coordinates><panel_attributes>lt=[MongoDB Java Driver]-[MongoDB]
-JSON Data
+fontsize=13</panel_attributes><additional_attributes>950;10;950;320;40;320</additional_attributes></element><element><id>Relation</id><coordinates><x>928</x><y>128</y><w>528</w><h>240</h></coordinates><panel_attributes>lt=[REST]-[]
+JSON Event Data
 &lt;&lt;Room Data Information&gt;&gt;
-fontsize=13</panel_attributes><additional_attributes>400;20;40;20</additional_attributes></element><element><id>Relation</id><coordinates><x>920</x><y>96</y><w>344</w><h>232</h></coordinates><panel_attributes>lt=[REST]-[]
-JSON Data
-&lt;&lt;Room Data Information&gt;&gt;
-fontsize=13</panel_attributes><additional_attributes>400;270;400;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>864</x><y>136</y><w>520</w><h>192</h></coordinates><panel_attributes>lt=[REST]-[]
-JSON Data
-&lt;&lt;Admin information&gt;&gt;
-fontsize=13</panel_attributes><additional_attributes>620;220;620;30;10;30;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1272</x><y>336</y><w>64</w><h>24</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;60;10</additional_attributes></element></diagram>
+fontsize=13</panel_attributes><additional_attributes>630;280;630;20;10;20</additional_attributes></element></diagram>
