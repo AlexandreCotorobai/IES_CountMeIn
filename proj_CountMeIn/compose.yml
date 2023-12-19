@@ -50,11 +50,11 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://deti-ies-20.ua.pt:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-
+    
   kafdrop:
     image: obsidiandynamics/kafdrop
     ports:
@@ -96,7 +96,7 @@ services:
         "spring.datasource.url" : "jdbc:postgresql://db_pg:5432/countmein",
         "spring.datasource.username" : "postgres",
         "spring.datasource.password" : "postgres",
-        "spring.data.mongodb.database" : "countmein",
+        "spring.data.mongodb.uri" : "mongodb://db_mongo:27017/countmein",
         "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.PostgreSQLDialect",
         "jwt.secret" : "3278a107eddccc12c83349a310f3a298928bb05f55a4e289acda858bbc73ad40",
         "jwt.expiration" : "7200",
