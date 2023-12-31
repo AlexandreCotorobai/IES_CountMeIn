@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import NavBar from "./Navbar";
 
+
 const CleanLayout = () => (
         <div>
             <header>
