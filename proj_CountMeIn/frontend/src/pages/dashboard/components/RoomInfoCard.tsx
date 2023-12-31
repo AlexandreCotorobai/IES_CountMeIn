@@ -140,12 +140,11 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = ({roomId}) => {
     
     return (
         // <Loading status={status}>
-            <Card className="items-center border-transparent shadow-xl space-y-2 dark:bg-sky-900 bg-cyan-100 px-10">
+            <Card className="items-center border-transparent shadow-xl space-y-7 dark:bg-sky-900 bg-cyan-100 px-10">
                 <CardHeader className="space-y-2 lg:text-start text-center">
                     <CardTitle className="text-3xl font-semibold dark:text-sky-100 text-cyan-900">General Info:</CardTitle>
                 </CardHeader>
                 <CardContent className="grid gap-y-7 dark:text-sky-100 text-cyan-900 text-center font-semibold text-2xl">
-                    <div>Uptime: {data?.upTime} Hours</div>
                     <div>Current Occupancy: {data?.currentOccupancy}</div>
                     <div>Maximum Occupancy: {data?.maxCapacity}</div>
                 </CardContent>
