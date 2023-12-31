@@ -86,7 +86,7 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = ({roomId}) => {
         {
             id: 'A',
             name: 'Green Area',
-            maxValue: maxCapacity*0.6,
+            maxValue: maxCapacity*0.7,
             color: '#82ca9d',
         },
         {
@@ -115,7 +115,8 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = ({roomId}) => {
         data.forEach((v: { maxValue: number; }) => {
           total += v.maxValue;
         });
-        const ang = 180.0 * (1 - value / total);
+        const adjustedValue = Math.min(value, total);
+        const ang = 180.0 * (1 - adjustedValue / total);
         const length = (iR + 2 * oR) / 3;
         const sin = Math.sin(-RADIAN * ang);
         const cos = Math.cos(-RADIAN * ang);
