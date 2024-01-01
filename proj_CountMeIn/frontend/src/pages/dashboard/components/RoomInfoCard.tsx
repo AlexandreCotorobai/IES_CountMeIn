@@ -86,7 +86,7 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = ({roomId}) => {
         {
             id: 'A',
             name: 'Green Area',
-            maxValue: maxCapacity*0.6,
+            maxValue: maxCapacity*0.7,
             color: '#82ca9d',
         },
         {
@@ -115,7 +115,8 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = ({roomId}) => {
         data.forEach((v: { maxValue: number; }) => {
           total += v.maxValue;
         });
-        const ang = 180.0 * (1 - value / total);
+        const adjustedValue = Math.min(value, total);
+        const ang = 180.0 * (1 - adjustedValue / total);
         const length = (iR + 2 * oR) / 3;
         const sin = Math.sin(-RADIAN * ang);
         const cos = Math.cos(-RADIAN * ang);
@@ -139,12 +140,11 @@ const RoomInfoCard: React.FC<RoomInfoCardProps> = ({roomId}) => {
     
     return (
         // <Loading status={status}>
-            <Card className="items-center border-transparent shadow-xl space-y-2 dark:bg-sky-900 bg-cyan-100 px-10">
+            <Card className="items-center border-transparent shadow-xl space-y-7 dark:bg-sky-900 bg-cyan-100 px-10">
                 <CardHeader className="space-y-2 lg:text-start text-center">
                     <CardTitle className="text-3xl font-semibold dark:text-sky-100 text-cyan-900">General Info:</CardTitle>
                 </CardHeader>
                 <CardContent className="grid gap-y-7 dark:text-sky-100 text-cyan-900 text-center font-semibold text-2xl">
-                    <div>Uptime: {data?.upTime} Hours</div>
                     <div>Current Occupancy: {data?.currentOccupancy}</div>
                     <div>Maximum Occupancy: {data?.maxCapacity}</div>
                 </CardContent>

@@ -5,6 +5,7 @@ import CleanLayout from "./layouts";
 const HomeComponent = lazy(() => import("./pages/home"));
 const LoginComponent = lazy(() => import("./pages/login"));
 const DashboardComponent = lazy(() => import("./pages/dashboard"));
+const NotFoundComponent = lazy(() => import("./pages/error404"));
 
 const routes = [
     {
@@ -35,6 +36,14 @@ const routes = [
                     </Suspense>
                 )
             },
+            {
+                path: '*',
+                element: (
+                    <Suspense fallback={<div>Loading 404 Page...</div>}>
+                        <NotFoundComponent />
+                    </Suspense>
+                )
+            }
         ],
     },
     // ... outras rotas

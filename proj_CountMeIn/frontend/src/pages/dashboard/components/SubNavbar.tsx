@@ -26,6 +26,7 @@ import axios from 'axios';
 import { API_URLS } from '@/lib/urls';
 import { useMutation, useQueryClient } from 'react-query';
 import { useRoomInfoContext } from '@/contexts/roomInformation';
+import {toast, Toaster} from 'sonner';
 
 
 interface SubNavbarProps {
@@ -66,14 +67,14 @@ const SubNavbar: React.FC<SubNavbarProps> = ({roomId, locked}) => {
     },
     {
         onSuccess: () => {
-            console.log("Success");
+            toast.success('Settings updated');
             setMaxCapacity(form.getValues('maxCapacity') ?? maxCapacity);
             setLocked(form.getValues('locked'));
             queryClient.invalidateQueries('rooms'); // Invalida a consulta 'rooms'
             setLastUpdate(new Date().toISOString());
         },
         onError: () => {
-            console.log("Error");
+            toast.error('Error updating settings');
         }
     }
     );
@@ -148,9 +149,12 @@ const SubNavbar: React.FC<SubNavbarProps> = ({roomId, locked}) => {
                                         </Button>
                                         <Button
                                             variant={'destructive'}
+                                            type='button'
                                             className="rounded-full px-10 text-white"
                                             onClick={() => {
-                                                form.reset();
+                                                form.reset({
+                                                    maxCapacity: maxCapacity,
+                                                });
                                                 localStorage.removeItem('lock_unlock');
                                             }}
                                         > Cancel
@@ -162,6 +166,7 @@ const SubNavbar: React.FC<SubNavbarProps> = ({roomId, locked}) => {
                     </DialogHeader>
                 </DialogContent>
             </Dialog>
+            <Toaster position="top-right" richColors/>
         </div>
     );
 };
