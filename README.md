@@ -63,5 +63,6 @@ Group 5's project for IES. Count Me In, is an automatic sensor service that cont
 ### Previews
 ![Front Page](https://github.com/AlexandreCotorobai/IES_CountMeIn/assets/49734556/de094653-acad-490b-8748-e2ab9da5c92c)
 ![Dashboard](https://github.com/AlexandreCotorobai/IES_CountMeIn/assets/49734556/1143dfd4-2689-485a-86fd-d79d83b97b19)
-![Gif](https://github.com/AlexandreCotorobai/IES_CountMeIn/assets/49734556/5fff912a-5ce1-499d-a5d9-7eae63d2e626)
+![image](https://s3.ezgif.com/tmp/ezgif-3-90d149a244.gif)
+
 
